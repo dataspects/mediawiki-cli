@@ -21,6 +21,6 @@ $CONTAINER_COMMAND play kube mediawiki-manager.yml
 source ./lib/waitForMariaDB.sh
 
 source ./my-system.env
-$CONTAINER_COMMAND exec $MEDIAWIKI_CONTAINER_NAME /bin/bash -c "cd /var/www/html/w && COMPOSER_HOME=/var/www/html/w php composer.phar update"
+$CONTAINER_COMMAND exec $MEDIAWIKI_CONTAINER_NAME /bin/bash -c "cd $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w && COMPOSER_HOME=$SYSTEM_ROOT_FOLDER_IN_CONTAINER/w php composer.phar update"
 
 runMWUpdatePHP

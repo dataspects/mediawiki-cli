@@ -18,25 +18,25 @@ restic \
     --repo $SYSTEM_SNAPSHOT_FOLDER_IN_CONTAINER \
     --password-file $RESTIC_PASSWORD_IN_CONTAINER \
         restore $SNAPSHOT_ID \
-            --target ./currentresources
+            --target $CURRENT_RESOURCES_IN_CONTAINER
 
-cp ./currentresources/var/www/html/currentresources/composer.local.json /var/www/html/w/composer.local.json; \
-cp ./currentresources/var/www/html/currentresources/composer.local.lock /var/www/html/w/composer.local.lock; \
-cp ./currentresources/var/www/html/currentresources/mwcliconfigdb.sqlite /var/www/html/mwcliconfigdb.sqlite; \
-rm -rf /var/www/html/w/extensions/*;
-cp -r --preserve=links ./currentresources/var/www/html/currentresources/extensions/* /var/www/html/w/extensions/; \
-rm -rf /var/www/html/w/skins/*;
-cp -r --preserve=links ./currentresources/var/www/html/currentresources/skins/* /var/www/html/w/skins/; \
-rm -rf /var/www/html/w/images/*;
-cp -r --preserve=links ./currentresources/var/www/html/currentresources/images/* /var/www/html/w/images/; \
-rm -rf /var/www/html/w/vendor/*;
-cp -r --preserve=links ./currentresources/var/www/html/currentresources/vendor/* /var/www/html/w/vendor/; \
+cp $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/composer.local.json $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w/composer.local.json; \
+cp $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/composer.local.lock $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w/composer.local.lock; \
+cp $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/mwcliconfigdb.sqlite /var/www/html/mwcliconfigdb.sqlite; \
+rm -rf $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w/extensions/*;
+cp -r --preserve=links $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/extensions/* $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w/extensions/; \
+rm -rf $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w/skins/*;
+cp -r --preserve=links $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/skins/* $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w/skins/; \
+rm -rf $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w/images/*;
+cp -r --preserve=links $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/images/* $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w/images/; \
+rm -rf $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w/vendor/*;
+cp -r --preserve=links $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/vendor/* $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w/vendor/; \
 rm -rf /etc/apache2/sites-available/*;
-cp -r --preserve=links ./currentresources/var/www/html/currentresources/sites-available/* /etc/apache2/sites-available/;
+cp -r --preserve=links $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/sites-available/* /etc/apache2/sites-available/;
 
 mysql -h $MYSQL_HOST -u $MYSQL_USER -p$WG_DB_PASSWORD \
-    $DATABASE_NAME < ./currentresources/var/www/html/currentresources/db.sql
+    $DATABASE_NAME < $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/db.sql
 
-php ./lib/updatemwmLocalSettings.php
-cd /var/www/html/w && COMPOSER_HOME=/var/www/html/w php composer.phar update
+php $MEDIAWIKI_CLI_IN_CONTAINER/lib/updatemwmLocalSettings.php
+cd $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w && COMPOSER_HOME=$SYSTEM_ROOT_FOLDER_IN_CONTAINER/w php composer.phar update
 cd -

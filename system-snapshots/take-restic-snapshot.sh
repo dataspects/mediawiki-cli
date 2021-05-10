@@ -3,8 +3,6 @@
 
 source ./lib/runInContainerOnly.sh
 
-CONTAINER_INTERNAL_PATH_TO_SNAPSHOT=/var/www/html/currentresources
-
 TAG=$1
 
 printf "Taking snapshot '$TAG'...\n"
@@ -12,21 +10,21 @@ printf "Taking snapshot '$TAG'...\n"
 ######
 # STEP 1: Dump content database
   mysqldump -h $MYSQL_HOST -u $MYSQL_USER -p$WG_DB_PASSWORD \
-  $DATABASE_NAME > $CONTAINER_INTERNAL_PATH_TO_SNAPSHOT/db.sql
+  $DATABASE_NAME > $CURRENT_RESOURCES_IN_CONTAINER/db.sql
 printf "mysqldump mediawiki completed.\n"
 
 ######
 # STEP 2: Copy folders and files
 cp -r \
-    /var/www/html/w/composer.local.json \
-    /var/www/html/w/composer.local.lock \
-    /var/www/html/w/extensions \
-    /var/www/html/w/skins \
-    /var/www/html/w/images \
-    /var/www/html/w/vendor \
-    /var/www/html/mwcliconfigdb.sqlite \
-    /etc/apache2/sites-available \
-    $CONTAINER_INTERNAL_PATH_TO_SNAPSHOT
+    $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w/composer.local.json \
+    $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w/composer.local.lock \
+    $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w/extensions \
+    $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w/skins \
+    $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w/images \
+    $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w/vendor \
+    $MWCLI_CONFIG_DB_IN_CONTAINER \
+    $APACHE_CONF_IN_CONTAINER \
+    $CURRENT_RESOURCES_IN_CONTAINER
   
 printf "copy folders and files completed.\n"
 

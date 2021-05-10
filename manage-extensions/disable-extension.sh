@@ -41,7 +41,7 @@ fi
 if [ $cInstrFound ]
 then
     echo "Running composer..."
-    cd /var/www/html/w && COMPOSER=composer.local.json COMPOSER_HOME=/var/www/html/w php composer.phar remove $composer
+    cd $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w && COMPOSER=composer.local.json COMPOSER_HOME=$SYSTEM_ROOT_FOLDER_IN_CONTAINER/w php composer.phar remove $composer
     cd -
     echo "Ran composer"
 fi

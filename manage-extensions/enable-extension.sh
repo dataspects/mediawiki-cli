@@ -4,9 +4,9 @@
 source ./lib/runInContainerOnly.sh
 
 # FIXME: handle multiple system setups
-source ./lib/utils.sh
-source ./manage-extensions/utils.sh
-source ./lib/permissions.sh
+source $MEDIAWIKI_CLI_IN_CONTAINER/lib/utils.sh
+source $MEDIAWIKI_CLI_IN_CONTAINER/manage-extensions/utils.sh
+source $MEDIAWIKI_CLI_IN_CONTAINER/lib/permissions.sh
 
 # https://cameronnokes.com/blog/working-with-json-in-bash-using-jq/
 # https://edoras.sdsu.edu/doc/sed-oneliners.html
@@ -36,7 +36,7 @@ then
 fi
 ###
 
-./system-snapshots/take-restic-snapshot.sh BeforeEnabling-$EXTNAME
+$MEDIAWIKI_CLI_IN_CONTAINER/system-snapshots/take-restic-snapshot.sh BeforeEnabling-$EXTNAME
 
 ###
 # Run installation aspects
@@ -44,7 +44,7 @@ if [ $cInstrFound ]
 then
     # CreateCampEMWCon2021: run composer correctly
     echo "Running composer..."
-    cd /var/www/html/w && COMPOSER=composer.local.json COMPOSER_HOME=/var/www/html/w php composer.phar require $composer
+    cd $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w && COMPOSER=composer.local.json COMPOSER_HOME=$SYSTEM_ROOT_FOLDER_IN_CONTAINER/w php composer.phar require $composer
     cd -
     echo "Ran composer"
 fi
@@ -63,7 +63,7 @@ then
         do
             lsDirectives="$lsDirectives $lsLine"
         done
-        php ./lib/addToMWCLISQLite.php "$EXTNAME" "$lsDirectives"
+        php $MEDIAWIKI_CLI_IN_CONTAINER/lib/addToMWCLISQLite.php "$EXTNAME" "$lsDirectives"
         if [[ $? == 0 ]]
         then
             echo "SUCCESS: $?"
@@ -74,5 +74,5 @@ then
 fi
 ###
 
-php ./lib/updatemwmLocalSettings.php
+php $MEDIAWIKI_CLI_IN_CONTAINER/lib/updatemwmLocalSettings.php
 runMWUpdatePHP
