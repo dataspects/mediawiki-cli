@@ -40,7 +40,7 @@ fi
 ######
 # STEP 3: Run restic backup
 restic \
-    --repo $MEDIAWIKI_SNAPSHOT_FOLDER_IN_CONTAINER \
+    --repo $SYSTEM_SNAPSHOT_FOLDER_IN_CONTAINER \
     --password-file $RESTIC_PASSWORD_IN_CONTAINER \
     $TAGS \
       backup $CONTAINER_INTERNAL_PATH_TO_SNAPSHOT

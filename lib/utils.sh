@@ -13,6 +13,8 @@ promptToContinue () {
     printf "\n"
 }
 
+export -f promptToContinue
+
 # CURL utils
 OPTION_INSECURE=--insecure
 cookie_jar="wikicj"
@@ -42,6 +44,8 @@ runMWUpdatePHP () {
         cd w; php maintenance/update.php --quick
     fi
 }
+
+export -f runMWUpdatePHP
 
 # Public MWCLIBashFunction
 runSMWRebuildData () {

@@ -74,5 +74,5 @@ then
 fi
 ###
 
-php ./lib/updateMWCLILocalSettings.php
+php ./lib/updatemwmLocalSettings.php
 runMWUpdatePHP

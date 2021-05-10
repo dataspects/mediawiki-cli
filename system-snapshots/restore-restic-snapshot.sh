@@ -15,7 +15,7 @@ fi
 
 
 restic \
-    --repo $MEDIAWIKI_SNAPSHOT_FOLDER_IN_CONTAINER \
+    --repo $SYSTEM_SNAPSHOT_FOLDER_IN_CONTAINER \
     --password-file $RESTIC_PASSWORD_IN_CONTAINER \
         restore $SNAPSHOT_ID \
             --target ./currentresources
@@ -37,6 +37,6 @@ cp -r --preserve=links ./currentresources/var/www/html/currentresources/sites-av
 mysql -h $MYSQL_HOST -u $MYSQL_USER -p$WG_DB_PASSWORD \
     $DATABASE_NAME < ./currentresources/var/www/html/currentresources/db.sql
 
-php ./lib/updateMWCLILocalSettings.php
+php ./lib/updatemwmLocalSettings.php
 cd /var/www/html/w && COMPOSER_HOME=/var/www/html/w php composer.phar update
 cd -

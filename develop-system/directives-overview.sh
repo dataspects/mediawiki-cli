@@ -9,7 +9,7 @@ strs=(
     "./system-snapshots/take-restic-snapshot.sh"
     "addToMWCLISQLite.php"
     "removeFromMWCLISQLite.php"
-    "updateMWCLILocalSettings.php"
+    "updatemwmLocalSettings.php"
     "composer.phar"
 )
 
@@ -26,7 +26,7 @@ FLAGS="--line-number \
     --ignore-case \
     --context=$CONTEXT \
     --exclude-dir=develop-system \
-    --exclude-dir=mediawiki_root \
+    --exclude-dir=system_root \
     --exclude-dir=mariadb_data \
     --exclude-dir=currentresources \
     --exclude-dir=.git"

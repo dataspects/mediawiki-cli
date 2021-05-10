@@ -1,13 +1,17 @@
 #!/bin/bash
 
-mwcliLocalSettings="mwcliLocalSettings.php"
+export mwmLocalSettings="mwmLocalSettings.php"
 
-initializeMWCLILocalSettings() {
-    $CONTAINER_COMMAND exec $MEDIAWIKI_CONTAINER_NAME /bin/bash -c "touch $mwcliLocalSettings"
-    writeToSystemLog "$mwcliLocalSettings initialized"
+initializemwmLocalSettings() {
+    $CONTAINER_COMMAND exec $MEDIAWIKI_CONTAINER_NAME /bin/bash -c "touch $mwmLocalSettings"
+    writeToSystemLog "$mwmLocalSettings initialized"
 }
 
-compileMWCLILocalSettings() {
-    $CONTAINER_COMMAND exec $MEDIAWIKI_CONTAINER_NAME /bin/bash -c "php ./lib/updateMWCLILocalSettings.php"
-    writeToSystemLog "Recompiled $mwcliLocalSettings"
+export -f initializemwmLocalSettings
+
+compilemwmLocalSettings() {
+    $CONTAINER_COMMAND exec $MEDIAWIKI_CONTAINER_NAME /bin/bash -c "php $MEDIAWIKI_CLI_IN_CONTAINER/lib/updateMWMLocalSettings.php"
+    writeToSystemLog "Recompiled $mwmLocalSettings"
 }
+
+export -f compilemwmLocalSettings

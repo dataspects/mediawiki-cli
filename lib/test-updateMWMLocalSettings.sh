@@ -3,4 +3,4 @@ source ./lib/runInContainerOnly.sh
 source ./lib/utils.sh
 
 
-php ./lib/updateMWCLILocalSettings.php
+php ./lib/updatemwmLocalSettings.php

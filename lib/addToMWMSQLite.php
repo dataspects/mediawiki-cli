@@ -2,7 +2,7 @@
 
 $name  = $argv[1];
 $localsettingsdirectives = $argv[2];
-$db = new SQLite3('mwcliconfigdb.sqlite');
+$db = new SQLite3('/var/www/mwmconfigdb.sqlite');
 
 $stmt = $db->prepare('INSERT INTO extensions (name, localsettingsdirectives) VALUES ( :name, :localsettingsdirectives)');
 $stmt->bindValue(':name', $name, SQLITE3_TEXT);
