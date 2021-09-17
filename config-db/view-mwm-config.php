@@ -1,6 +1,6 @@
 <?php
 
-$db = new SQLite3('mwcliconfigdb.sqlite');
+$db = new SQLite3('mwmconfigdb.sqlite');
 $stmt = $db->prepare('SELECT localsettingsdirectives FROM extensions');
 $result = $stmt->execute();
 
