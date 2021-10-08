@@ -6,6 +6,6 @@ set -a
 set +a
 if [ -n "$DEBUG" ] ; then echo "RUN LEX2110080738" ; fi
 
-$CONTAINER_COMMAND exec --env-file=./my-system.env \
+$CONTAINER_COMMAND exec -it --env-file=./my-system.env \
     $MEDIAWIKI_CONTAINER_NAME \
     /bin/bash

@@ -1,5 +1,5 @@
 #!/bin/bash
-source ./lib/runInContainerOnly.sh
+if [ "`ls /home`" != "" ] ; then source ./lib/runInContainerOnly.sh ; fi
 source ./lib/utils.sh
 
 

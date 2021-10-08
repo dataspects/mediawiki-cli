@@ -1,7 +1,7 @@
 #!/bin/bash
 # Public MWCLIBashScript: Restore system snapshot.
 
-source ./lib/runInContainerOnly.sh
+if [ "`ls /home`" != "" ] ; then source ./lib/runInContainerOnly.sh ; fi
 
 SNAPSHOT_ID=$1
 

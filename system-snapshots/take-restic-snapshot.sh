@@ -1,7 +1,7 @@
 #!/bin/bash
 # Public MWCLIBashScript: Take system snapshot.
 
-source ./lib/runInContainerOnly.sh
+if [ "`ls /home`" != "" ] ; then source ./lib/runInContainerOnly.sh ; fi
 
 TAG=$1
 

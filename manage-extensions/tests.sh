@@ -1,5 +1,5 @@
 #!/bin/bash
-source ./lib/runInContainerOnly.sh=false
+if [ "`ls /home`" != "" ] ; then source ./lib/runInContainerOnly.sh ; fi=false
 source ./lib/utils.sh
 source ./my-system.env
 

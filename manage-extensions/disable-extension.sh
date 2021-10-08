@@ -1,7 +1,7 @@
 #!/bin/bash
 # Public MWCLIBashScript: Disable extensions selected from $CATALOGUE_URL.
 
-source ./lib/runInContainerOnly.sh
+if [ "`ls /home`" != "" ] ; then source ./lib/runInContainerOnly.sh ; fi
 
 # FIXME: handle multiple system setups
 source ./manage-extensions/utils.sh
