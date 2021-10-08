@@ -10,7 +10,7 @@ initializemwmLocalSettings() {
 export -f initializemwmLocalSettings
 
 compilemwmLocalSettings() {
-    $CONTAINER_COMMAND exec $MEDIAWIKI_CONTAINER_NAME /bin/bash -c "php $MEDIAWIKI_CLI_IN_CONTAINER/lib/updateMWMLocalSettings.php"
+    $CONTAINER_COMMAND exec $MEDIAWIKI_CONTAINER_NAME /bin/bash -c "php $MEDIAWIKI_CLI_IN_CONTAINER/lib/compileMWMLocalSettings.php"
     writeToSystemLog "Recompiled $mwmLocalSettings"
 }
 
