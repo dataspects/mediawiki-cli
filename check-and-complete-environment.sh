@@ -1,5 +1,5 @@
 #!/bin/bash
-if $DEBUG ; then echo "RUN LEX2110071928" ; fi
+if [ -n "$DEBUG" ] ; then echo "RUN LEX2110071928" ; fi
 
 sudo apt update
 

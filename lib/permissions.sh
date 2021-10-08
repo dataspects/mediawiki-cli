@@ -2,6 +2,8 @@
 
 # CreateCampEMWCon2021: Check general permissions
 
+if [ -n "$DEBUG" ] ; then echo "RUN LEX2110080658" ; fi
+
 setPermissionsOnSystemInstanceRoot () {
 
     dir=$MWCLI_SYSTEM_LOG_ON_HOSTING_SYSTEM

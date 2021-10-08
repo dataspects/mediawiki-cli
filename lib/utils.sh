@@ -1,5 +1,7 @@
 #!/bin/bash
 
+if [ -n "$DEBUG" ] ; then echo "RUN LEX2110080657" ; fi
+
 # Public MWCLIBashFunction
 promptToContinue () {
     printf "\n\n\e[2m"

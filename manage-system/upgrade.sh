@@ -13,8 +13,8 @@ read MEDIAWIKI_IMAGE
 ./manage-system/stop.sh
 $CONTAINER_COMMAND pod rm mwcli-deployment-pod-0
 
-envsubst < mediawiki-manager.tpl > mediawiki-manager.yml
-$CONTAINER_COMMAND play kube mediawiki-manager.yml
+envsubst < mediawiki-installer.tpl > mediawiki-installer.yml
+$CONTAINER_COMMAND play kube mediawiki-installer.yml
 
 ./system-snapshots/restore-restic-snapshot.sh latest
 

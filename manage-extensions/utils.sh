@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CATALOGUE_URL=https://raw.githubusercontent.com/dataspects/mediawiki-manager/main/catalogues/extensions.json
+CATALOGUE_URL=https://raw.githubusercontent.com/dataspects/mediawiki-installer/main/catalogues/extensions.json
 
 # https://cameronnokes.com/blog/working-with-json-in-bash-using-jq/
 

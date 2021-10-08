@@ -1,5 +1,7 @@
 #!/bin/bash
 
+if [ -n "$DEBUG" ] ; then echo "RUN LEX2110080656" ; fi
+
 # Public MWCLIBashFunction
 initializeSystemLog () {
     FILE=$MWCLI_SYSTEM_LOG_ON_HOSTING_SYSTEM/system.log

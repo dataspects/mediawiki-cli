@@ -1,5 +1,7 @@
 #!/bin/bash
 
+if [ -n "$DEBUG" ] ; then echo "RUN LEX2110080655" ; fi
+
 export mwmLocalSettings="mwmLocalSettings.php"
 
 initializemwmLocalSettings() {
@@ -9,9 +11,9 @@ initializemwmLocalSettings() {
 
 export -f initializemwmLocalSettings
 
-compilemwmLocalSettings() {
+compileMWMLocalSettings() {
     $CONTAINER_COMMAND exec $MEDIAWIKI_CONTAINER_NAME /bin/bash -c "php $MEDIAWIKI_CLI_IN_CONTAINER/lib/compileMWMLocalSettings.php"
     writeToSystemLog "Recompiled $mwmLocalSettings"
 }
 
-export -f compilemwmLocalSettings
+export -f compileMWMLocalSettings
