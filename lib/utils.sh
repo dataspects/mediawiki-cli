@@ -31,7 +31,9 @@ getPageData () {
 runMWRunJobsPHP () {
     if [ "`ls /home`" != "" ]
     then
-        $CONTAINER_COMMAND exec $MEDIAWIKI_CONTAINER_NAME /bin/bash -c "cd w; php maintenance/runJobs.php"
+        $CONTAINER_COMMAND exec \
+            $MEDIAWIKI_CONTAINER_NAME \
+            /bin/bash -c "cd w; php maintenance/runJobs.php"
     else
         cd w; php maintenance/runJobs.php --quick
     fi
@@ -41,7 +43,9 @@ runMWRunJobsPHP () {
 runMWUpdatePHP () {
     if [ "`ls /home`" != "" ]
     then
-        $CONTAINER_COMMAND exec $MEDIAWIKI_CONTAINER_NAME /bin/bash -c "cd w; php maintenance/update.php --quick"
+        $CONTAINER_COMMAND exec \
+            $MEDIAWIKI_CONTAINER_NAME \
+            /bin/bash -c "cd w; php maintenance/update.php --quick"
     else
         cd w; php maintenance/update.php --quick
     fi
@@ -53,8 +57,19 @@ export -f runMWUpdatePHP
 runSMWRebuildData () {
     if [ "`ls /home`" != "" ]
     then
-        $CONTAINER_COMMAND exec $MEDIAWIKI_CONTAINER_NAME /bin/bash -c "cd w; php extensions/SemanticMediaWiki/maintenance/rebuildData.php"
+        $CONTAINER_COMMAND exec \
+            $MEDIAWIKI_CONTAINER_NAME \
+            /bin/bash -c "cd w; php extensions/SemanticMediaWiki/maintenance/rebuildData.php"
     else
         cd w; php extensions/SemanticMediaWiki/maintenance/rebuildData.php
     fi
 }
+
+export mwmLocalSettings="mwmLocalSettings.php"
+
+initializemwmLocalSettings() {
+    $CONTAINER_COMMAND exec $MEDIAWIKI_CONTAINER_NAME /bin/bash -c "touch $mwmLocalSettings"
+    writeToSystemLog "$mwmLocalSettings initialized"
+}
+
+export -f initializemwmLocalSettings

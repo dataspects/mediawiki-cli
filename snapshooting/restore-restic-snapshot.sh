@@ -22,7 +22,7 @@ restic \
 
 cp $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/composer.local.json $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w/composer.local.json; \
 cp $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/composer.local.lock $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w/composer.local.lock; \
-cp $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/mwcliconfigdb.sqlite /var/www/html/mwcliconfigdb.sqlite; \
+cp $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/mwmconfigdb.sqlite /var/www/html/mwmconfigdb.sqlite; \
 rm -rf $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w/extensions/*;
 cp -r --preserve=links $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/extensions/* $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w/extensions/; \
 rm -rf $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w/skins/*;

@@ -7,6 +7,4 @@ set +a
 printf "\e[0m"
 if [ -n "$DEBUG" ] ; then echo "RUN LEX2110091037" ; fi
 
-docker exec -it --env-file=./my-system.env \
-    $MEDIAWIKI_CONTAINER_NAME \
-    /bin/bash
+docker logs -f $MEDIAWIKI_CONTAINER_NAME
