@@ -25,3 +25,10 @@ docker-compose --file ../docker-compose-dataspects-mediawiki.yml up -d
 ./run-shared-sh-command.sh initialize-database.sh
 ./run-shared-sh-command.sh maintenance-update.php.sh
 ###############################################################################
+
+###############################################################################
+./run-shared-sh-command.sh initialize-mwcliconfigdb.sh
+./run-shared-php-command.sh 'addToMWMSQLite.php "maintenance" "\$wgReadOnly = \"ReadOnly\";"'
+./run-shared-php-command.sh view-mwm-config.php
+./run-shared-php-command.sh compileMWMLocalSettings.php
+###############################################################################

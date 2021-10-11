@@ -14,6 +14,10 @@ mediawiki-cli$
 && ./run-shared-php-command.sh view-mwm-config.php
 * ./run-shared-php-command.sh 'removeFromMWMSQLite.php "one"'
 
+# Install
+
+1. Edit `~/mediawiki-cli$ ./my-system.env`
+2. Run `~/mediawiki-cli$ ./install/install.sh`
 ## Development
 
     ~/mediawiki-cli$ docker-compose \

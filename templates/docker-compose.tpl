@@ -16,8 +16,13 @@ services:
       - mariadb
     volumes:
       - /home/lex/mediawiki-cli/shared:/var/www/html/shared
+      - $MEDIAWIKI_CONTAINER_NAME:/var/www/html
     ports:
       - $MEDIAWIKI_PORT:8080
 volumes:
   mariadb_data:
     driver: local
+    name: mariadb_data
+  $MEDIAWIKI_CONTAINER_NAME:
+    driver: local
+    name: $MEDIAWIKI_CONTAINER_NAME
