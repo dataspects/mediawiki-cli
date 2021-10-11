@@ -15,8 +15,11 @@ services:
     depends_on:
       - mariadb
     volumes:
-      - /home/lex/mediawiki-cli/shared:/var/www/html/shared
+      - /home/lex/mediawiki-cli/shared:/var/www/shared
+      - /home/lex/mediawiki-cli/restic_password:/var/www/restic_password
       - $MEDIAWIKI_CONTAINER_NAME:/var/www/html
+      - ${MEDIAWIKI_CONTAINER_NAME}_currentresources:/var/www/currentresources
+      - ${MEDIAWIKI_CONTAINER_NAME}_snapshots:/var/www/snapshots
     ports:
       - $MEDIAWIKI_PORT:8080
 volumes:
@@ -26,3 +29,9 @@ volumes:
   $MEDIAWIKI_CONTAINER_NAME:
     driver: local
     name: $MEDIAWIKI_CONTAINER_NAME
+  ${MEDIAWIKI_CONTAINER_NAME}_snapshots:
+    driver: local
+    name: ${MEDIAWIKI_CONTAINER_NAME}_snapshots
+  ${MEDIAWIKI_CONTAINER_NAME}_currentresources:
+    driver: local
+    name: ${MEDIAWIKI_CONTAINER_NAME}_currentresources
