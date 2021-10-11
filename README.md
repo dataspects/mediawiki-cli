@@ -13,3 +13,10 @@ mediawiki-cli$
 && ./run-shared-php-command.sh compileMWMLocalSettings.php \
 && ./run-shared-php-command.sh view-mwm-config.php
 * ./run-shared-php-command.sh 'removeFromMWMSQLite.php "one"'
+
+## Development
+
+    ~/mediawiki-cli$ docker-compose \
+        --file ../docker-compose-dataspects-mediawiki.yml down \
+        && docker volume prune \
+        && ./install/install.sh ./my-system.env

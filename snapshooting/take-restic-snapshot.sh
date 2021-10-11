@@ -9,7 +9,7 @@ printf "Taking snapshot '$TAG'...\n"
 
 ######
 # STEP 1: Dump content database
-  mysqldump -h $MYSQL_HOST -u $MYSQL_USER -p$WG_DB_PASSWORD \
+  mysqldump -h $MYSQL_HOST -u $MYSQL_USER -p$MYSQL_PASSWORD \
   $DATABASE_NAME > $CURRENT_RESOURCES_IN_CONTAINER/db.sql
 printf "mysqldump mediawiki completed.\n"
 

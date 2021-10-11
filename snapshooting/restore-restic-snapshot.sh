@@ -34,7 +34,7 @@ cp -r --preserve=links $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresou
 rm -rf /etc/apache2/sites-available/*;
 cp -r --preserve=links $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/sites-available/* /etc/apache2/sites-available/;
 
-mysql -h $MYSQL_HOST -u $MYSQL_USER -p$WG_DB_PASSWORD \
+mysql -h $MYSQL_HOST -u $MYSQL_USER -p$MYSQL_PASSWORD \
     $DATABASE_NAME < $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/db.sql
 
 php $MEDIAWIKI_CLI_IN_CONTAINER/lib/updatemwmLocalSettings.php

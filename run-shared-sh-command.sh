@@ -8,4 +8,4 @@ set +a \
 printf "\e[0m"
 if [ -n "$DEBUG" ] ; then echo "RUN LEX2110091420" ; fi
 
-docker exec $MEDIAWIKI_CONTAINER_NAME /bin/bash -c "../shared/$1"
+docker exec --env-file ./my-system.env $MEDIAWIKI_CONTAINER_NAME /bin/bash -c "shared/$1"
