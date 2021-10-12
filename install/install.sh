@@ -16,8 +16,8 @@ if [ -n "$DEBUG" ] ; then echo "RUN LEX2110111218" ; fi
 
 ###############################################################################
 # DOCKER COMPOSE
-envsubst < templates/docker-compose.tpl > ../docker-compose-dataspects-mediawiki.yml
-docker-compose --file ../docker-compose-dataspects-mediawiki.yml up -d
+#envsubst < templates/docker-compose.tpl > ../docker-compose-dataspects-mediawiki.yml
+#docker-compose --file ../docker-compose-dataspects-mediawiki.yml up -d
 ###############################################################################
 
 ###############################################################################
