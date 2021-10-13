@@ -9,6 +9,6 @@ while($res = $result->fetchArray(SQLITE3_ASSOC)){
     $mwmLocalSettingsString .= trim($res["localsettingsdirectives"])."\n";
 }
 
-$mwcliLS = fopen("/var/www/html/mwmLocalSettings.php", "w");
+$mwcliLS = fopen("/var/www/config/mwmLocalSettings.php", "w");
 fwrite($mwcliLS, "<?php\n".$mwmLocalSettingsString);
 fclose($mwcliLS);
