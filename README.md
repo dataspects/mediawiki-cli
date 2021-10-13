@@ -9,7 +9,7 @@ mediawiki-cli$
 && ./run-shared-sh-command.sh initialize-database.sh \
 && ./run-shared-sh-command.sh maintenance-update.php.sh \
 && ./run-shared-sh-command.sh initialize-mwcliconfigdb.sh \
-&& ./run-shared-php-command.sh 'addToMWMSQLite.php "maintenance" "\$wgReadOnly = 'ReadOnly';"' \
+&& ./run-shared-php-command.sh 'addToMWMSQLite.php "maintenance" "\$wgServer = 'ReadOnly';"' \
 && ./run-shared-php-command.sh compileMWMLocalSettings.php \
 && ./run-shared-php-command.sh view-mwm-config.php
 * ./run-shared-php-command.sh 'removeFromMWMSQLite.php "one"'
@@ -18,6 +18,7 @@ mediawiki-cli$
 
 1. Edit `~/mediawiki-cli$ ./my-system.env`
 2. Run `~/mediawiki-cli$ ./install/install.sh`
+
 ## Development
 
     ~/mediawiki-cli$ docker-compose \

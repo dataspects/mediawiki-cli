@@ -1,6 +1,6 @@
 <?php
 shell_exec('pwd');
-$db = new SQLite3("/var/www/html/mwmconfigdb.sqlite");
+$db = new SQLite3("/var/www/config/mwmconfigdb.sqlite");
 $stmt = $db->prepare("SELECT localsettingsdirectives FROM extensions");
 $result = $stmt->execute();
 
@@ -9,6 +9,6 @@ while($res = $result->fetchArray(SQLITE3_ASSOC)){
     $mwmLocalSettingsString .= trim($res["localsettingsdirectives"])."\n";
 }
 
-$mwcliLS = fopen("../html/mwmLocalSettings.php", "w");
+$mwcliLS = fopen("/var/www/html/mwmLocalSettings.php", "w");
 fwrite($mwcliLS, "<?php\n".$mwmLocalSettingsString);
 fclose($mwcliLS);
