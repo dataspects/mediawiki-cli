@@ -50,7 +50,7 @@ fi
 if [ $rInstrFound ]
 then
     echo "Running repository"
-    git clone $repository w/extensions/$EXTNAME
+    git clone $repository /var/www/html/w/extensions/$EXTNAME
 fi
 if [ $lsInstrFound ]
 then
@@ -61,7 +61,7 @@ then
         do
             lsDirectives="$lsDirectives $lsLine"
         done
-        php /var/www/manage/mediawiki-cli/manage-config/addToMWCLISQLite.php "$EXTNAME" "$lsDirectives"
+        php /var/www/manage/mediawiki-cli/manage-config/addToMWMSQLite.php "$EXTNAME" "$lsDirectives"
         if [[ $? == 0 ]]
         then
             echo "SUCCESS: $?"
@@ -72,5 +72,5 @@ then
 fi
 ###
 
-php /var/www/manage/mediawiki-cli/manage-config/compileMWMLocalSettings.php.php
+php /var/www/manage/mediawiki-cli/manage-config/compileMWMLocalSettings.php
 runMWUpdatePHP
