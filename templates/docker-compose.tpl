@@ -52,25 +52,3 @@ volumes:
   mediawiki0_images:
     driver: local
     name: mediawiki0_images
-
-
-
-  
- name: system_root_w_extensions
-          hostPath:
-            path: ${SYSTEM_ROOT_FOLDER_ON_HOSTING_SYSTEM}/w/extensions
-        - name: system_root_w_skins
-          hostPath:
-            path: ${SYSTEM_ROOT_FOLDER_ON_HOSTING_SYSTEM}/w/skins
-        - name: system_root_w_vendor
-          hostPath:
-            path: ${SYSTEM_ROOT_FOLDER_ON_HOSTING_SYSTEM}/w/vendor
-        - name: system_root_w_composerLocalJSON
-          hostPath:
-            path: ${SYSTEM_ROOT_FOLDER_ON_HOSTING_SYSTEM}/w/composer.local.json
-        - name: system_root_w_composerLocalLock
-          hostPath:
-            path: ${SYSTEM_ROOT_FOLDER_ON_HOSTING_SYSTEM}/w/composer.local.lock
-        - name: system_root_w_images
-          hostPath:
-            path: ${SYSTEM_ROOT_FOLDER_ON_HOSTING_SYSTEM}/w/images

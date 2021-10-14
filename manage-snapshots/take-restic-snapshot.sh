@@ -20,6 +20,8 @@ printf "mysqldump mediawiki completed.\n"
 ######
 # STEP 2: Copy folders and files
 cp -r \
+    /var/www/html/w/composer.local.json \
+    /var/www/html/w/composer.local.lock \
     /var/www/html/w/extensions \
     /var/www/html/w/skins \
     /var/www/html/w/images \
@@ -27,9 +29,6 @@ cp -r \
     /var/www/config/mwmconfigdb.sqlite \
     /var/www/config/mwmLocalSettings.php \
     /var/www/currentsnapshot
-
-# /var/www/html/w/composer.local.json \
-# /var/www/html/w/composer.local.lock \
 
 printf "copy folders and files completed.\n"
 
