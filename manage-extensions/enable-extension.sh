@@ -1,12 +1,10 @@
 #!/bin/bash
 # Public MWCLIBashScript: Enable extensions selected from $CATALOGUE_URL.
 
-if [ "`ls /home`" != "" ] ; then source ./lib/runInContainerOnly.sh ; fi
-
 # FIXME: handle multiple system setups
-source $MEDIAWIKI_CLI_IN_CONTAINER/lib/utils.sh
-source $MEDIAWIKI_CLI_IN_CONTAINER/manage-extensions/utils.sh
-source $MEDIAWIKI_CLI_IN_CONTAINER/lib/permissions.sh
+source /var/www/manage/mediawiki-cli/lib/utils.sh
+source /var/www/manage/mediawiki-cli/manage-extensions/utils.sh
+source /var/www/manage/mediawiki-cli/lib/permissions.sh
 
 # https://cameronnokes.com/blog/working-with-json-in-bash-using-jq/
 # https://edoras.sdsu.edu/doc/sed-oneliners.html
@@ -36,7 +34,7 @@ then
 fi
 ###
 
-$MEDIAWIKI_CLI_IN_CONTAINER/system-snapshots/take-restic-snapshot.sh BeforeEnabling-$EXTNAME
+/var/www/manage/mediawiki-cli/system-snapshots/take-restic-snapshot.sh BeforeEnabling-$EXTNAME
 
 ###
 # Run installation aspects
@@ -44,7 +42,7 @@ if [ $cInstrFound ]
 then
     # CreateCampEMWCon2021: run composer correctly
     echo "Running composer..."
-    cd $SYSTEM_ROOT_FOLDER_IN_CONTAINER/w && COMPOSER=composer.local.json COMPOSER_HOME=$SYSTEM_ROOT_FOLDER_IN_CONTAINER/w php composer.phar require $composer
+    cd /var/www/html/w && COMPOSER=composer.local.json COMPOSER_HOME=/var/www/html/w php composer.phar require $composer
     cd -
     echo "Ran composer"
 fi
@@ -63,7 +61,7 @@ then
         do
             lsDirectives="$lsDirectives $lsLine"
         done
-        php $MEDIAWIKI_CLI_IN_CONTAINER/lib/addToMWCLISQLite.php "$EXTNAME" "$lsDirectives"
+        php /var/www/manage/mediawiki-cli/lib/addToMWCLISQLite.php "$EXTNAME" "$lsDirectives"
         if [[ $? == 0 ]]
         then
             echo "SUCCESS: $?"
@@ -74,5 +72,5 @@ then
 fi
 ###
 
-php $MEDIAWIKI_CLI_IN_CONTAINER/lib/updatemwmLocalSettings.php
+php /var/www/manage/mediawiki-cli/manage-config/updatemwmLocalSettings.php
 runMWUpdatePHP

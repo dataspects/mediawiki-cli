@@ -1,8 +1,8 @@
 #!/bin/bash
 # Public MWCLIBashScript: Show extensions featured in $CATALOGUE_URL.
 
-source ./lib/utils.sh
-source ./manage-extensions/utils.sh
+source /var/www/manage/mediawiki-cli/lib/utils.sh
+source /var/www/manage/mediawiki-cli/manage-extensions/utils.sh
 
 getExtensionJSON
 printf "\n\033[0;32m\e[1mMWStake Certified Extensions Catalog\033[0m"

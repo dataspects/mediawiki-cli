@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./lib/utils.sh
+source /var/www/manage/mediawiki-cli/lib/utils.sh
 
 printf "Comparing system_root/w/extensions/ <<<>>> existing_version/extensions/\n\n"
 diff --brief \
