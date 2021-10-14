@@ -1,10 +1,10 @@
-'''Welcome!'''
+'''Welcome to your dataspects Snoopy!'''
+
 {{#mermaid:graph TD;
-    Snoopy["&lt;a href='http://snoopy'&gt;http://snoopy&lt;/a&gt;"]
-    Snoopy["&lt;a href='http://snoopy'&gt;http://snoopy&lt;/a&gt;"]
-    Search["&lt;a href='http://search.snoopy'&gt;http://search.snoopy&lt;/a&gt;"]
-    Wiki["&lt;a href='http://wiki.snoopy'&gt;http://wiki.snoopy&lt;/a&gt;"]
-    Dashboards["&lt;a href='http://dashboards.snoopy'&gt;http://dashboards.snoopy&lt;/a&gt;"]
+    Snoopy["&lt;a href='http://snoopy'&gt;snoopy&lt;/a&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt;Monitor your Snoopy's health&lt;/li&gt;&lt;/ul&gt;"]
+    Search["&lt;a href='http://search.snoopy'&gt;search.snoopy&lt;/a&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt;Search your information&lt;/li&gt;&lt;li&gt;Understand your information&lt;/li&gt;&lt;li&gt;Index your information&lt;/li&gt;&lt;/ul&gt;"]
+    Wiki["&lt;a href='http://wiki.snoopy'&gt;wiki.snoopy&lt;/a&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt;Edit knowledge bites&lt;/li&gt;&lt;/ul&gt;"]
+    Dashboards["&lt;a href='http://dashboards.snoopy'&gt;dashboards.snoopy&lt;/a&gt;&lt;br/&gt;&lt;ul&gt;&lt;li&gt;Monitor your data statistics&lt;/li&gt;&lt;/ul&gt;"]
     Snoopy--> Search
     Snoopy--> Wiki
     Snoopy--> Dashboards
