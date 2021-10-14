@@ -4,7 +4,7 @@ source ./lib/utils.sh
 source ./my-system.env
 
 specialVersionLink () {
-    printf "Check https://$SYSTEM_DOMAIN_NAME:4443/wiki/Special:Version"
+    printf "Check http://wiki.snoopy/wiki/Special:Version"
 }
 
 ###############

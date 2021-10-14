@@ -2,12 +2,10 @@
 
 # CreateCampEMWCon2021: https://mwstake.org/mwstake/wiki/MWStake_MediaWiki_Manager/ContentManagement
 
-source ./my-system.env
-
 source ./lib/utils.sh
 
-WIKI=https://$SYSTEM_DOMAIN_NAME:4443/w
-WIKIAPI=https://$SYSTEM_DOMAIN_NAME:4443/w/api.php
+WIKI=http://wiki.snoopy/w
+WIKIAPI=http://wiki.snoopy/w/api.php
 
 CR=$(curl -S \
     $OPTION_INSECURE \
