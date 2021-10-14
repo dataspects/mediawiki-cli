@@ -1,8 +1,6 @@
 #!/bin/bash
 # Public MWCLIBashScript: Inject <TITLE>s from <WIKIAPI> BY <SECTION>s.
 
-source ./my-system.env
-
 ####################################
 
 source ./lib/utils.sh

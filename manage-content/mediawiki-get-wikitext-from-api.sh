@@ -1,9 +1,5 @@
 #!/bin/bash
 
-source ./my-system.env
-
-####################################
-
 source ./lib/utils.sh
 
 CR=$(curl -S \

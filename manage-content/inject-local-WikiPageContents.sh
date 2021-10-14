@@ -1,8 +1,6 @@
 #!/bin/bash
 # Public MWCLIBashScript: Inject <PageName>.wikitext files from local ./WikiPageContents directory.
 
-source ./my-system.env
-
 ####################################
 
 source ./lib/utils.sh
