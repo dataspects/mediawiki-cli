@@ -72,5 +72,5 @@ then
 fi
 ###
 
-php /var/www/manage/mediawiki-cli/manage-config/updatemwmLocalSettings.php
+php /var/www/manage/mediawiki-cli/manage-config/compileMWMLocalSettings.php.php
 runMWUpdatePHP

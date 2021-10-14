@@ -9,7 +9,7 @@ strs=(
     "./manage-snapshots/take-restic-snapshot.sh"
     "addToMWCLISQLite.php"
     "removeFromMWCLISQLite.php"
-    "updatemwmLocalSettings.php"
+    "compileMWMLocalSettings.php.php"
     "composer.phar"
 )
 

@@ -25,7 +25,7 @@ cp -r \
     /var/www/html/w/images \
     /var/www/html/w/vendor \
     /var/www/config/mwmconfigdb.sqlite \
-    /var/www/html/mwmLocalSettings.php \
+    /var/www/config/mwmLocalSettings.php \
     /var/www/currentsnapshot
 
 # /var/www/html/w/composer.local.json \

@@ -29,47 +29,17 @@ getPageData () {
 
 # Public MWCLIBashFunction
 runMWRunJobsPHP () {
-    if [ "`ls /home`" != "" ]
-    then
-        $CONTAINER_COMMAND exec \
-            $MEDIAWIKI_CONTAINER_NAME \
-            /bin/bash -c "cd w; php maintenance/runJobs.php"
-    else
-        cd w; php maintenance/runJobs.php --quick
-    fi
+    php /var/www/html/w/maintenance/runJobs.php --quick
 }
 
 # Public MWCLIBashFunction
 runMWUpdatePHP () {
-    if [ "`ls /home`" != "" ]
-    then
-        $CONTAINER_COMMAND exec \
-            $MEDIAWIKI_CONTAINER_NAME \
-            /bin/bash -c "cd w; php maintenance/update.php --quick"
-    else
-        cd w; php maintenance/update.php --quick
-    fi
+    php /var/www/html/w/maintenance/update.php --quick
 }
 
 export -f runMWUpdatePHP
 
 # Public MWCLIBashFunction
 runSMWRebuildData () {
-    if [ "`ls /home`" != "" ]
-    then
-        $CONTAINER_COMMAND exec \
-            $MEDIAWIKI_CONTAINER_NAME \
-            /bin/bash -c "cd w; php extensions/SemanticMediaWiki/maintenance/rebuildData.php"
-    else
-        cd w; php extensions/SemanticMediaWiki/maintenance/rebuildData.php
-    fi
+    php /var/www/html/w/extensions/SemanticMediaWiki/maintenance/rebuildData.php
 }
-
-export mwmLocalSettings="mwmLocalSettings.php"
-
-initializemwmLocalSettings() {
-    $CONTAINER_COMMAND exec $MEDIAWIKI_CONTAINER_NAME /bin/bash -c "touch $mwmLocalSettings"
-    writeToSystemLog "$mwmLocalSettings initialized"
-}
-
-export -f initializemwmLocalSettings

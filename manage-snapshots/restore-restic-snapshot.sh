@@ -34,6 +34,6 @@ restic -r s3:$AWS_S3_API/$AWS_S3_BUCKET \
 # mysql -h $MYSQL_HOST -u $MYSQL_USER -p$MYSQL_PASSWORD \
 #     $DATABASE_NAME < $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/db.sql
 
-# php /var/www/manage/mediawiki-cli/manage-config/updatemwmLocalSettings.php
+# php /var/www/manage/mediawiki-cli/manage-config/compileMWMLocalSettings.php.php
 # cd /var/www/html/w && COMPOSER_HOME=/var/www/html/w php composer.phar update
 # cd -
