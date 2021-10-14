@@ -55,10 +55,10 @@
         echo `pwd`
         echo $localSettings | jq -r '.[]' | while read lsLine
         do
-            php /var/www/manage/mediawiki-cli/manage-config/removeFromMWCLISQLite.php "$EXTNAME"
+            php /var/www/manage/mediawiki-cli/manage-config/removeFromMWMSQLite.php "$EXTNAME"
         done
     fi
     ###
 
-    php /var/www/manage/mediawiki-cli/manage-config/compileMWMLocalSettings.php.php
+    php /var/www/manage/mediawiki-cli/manage-config/compileMWMLocalSettings.php
     runMWUpdatePHP
