@@ -1,4 +1,4 @@
-# mediawiki-cli
+# mediawiki-cli for dataspects Snoopy
 
 mediawiki-cli$
 
@@ -19,9 +19,15 @@ mediawiki-cli$
 1. Edit `~/mediawiki-cli$ ./my-system.env`
 2. Run `~/mediawiki-cli$ ./install/install.sh`
 
-## Development
+## Snoopy
 
-    ~/mediawiki-cli$ docker-compose \
-        --file ../docker-compose-dataspects-mediawiki.yml down \
-        && docker volume prune \
-        && ./install/install.sh ./my-system.env
+### ubuntu@snoopy:~$
+    
+    docker exec -it <WIKI_CONTAINER> /bin/bash
+
+### root@35adcced231c:/var/www/html#
+
+    cd /var/www/manage/mediawiki-cli/
+
+    ./manage-extensions/show-extension-catalogue.sh
+    

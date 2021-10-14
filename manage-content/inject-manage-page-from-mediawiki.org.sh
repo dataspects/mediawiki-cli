@@ -7,7 +7,7 @@ source ./my-system.env
 
 source ./lib/utils.sh
 
-# ./system-snapshots/take-restic-snapshot.sh BeforeMWOrgContentsInjection
+# ./manage-snapshots/take-restic-snapshot.sh BeforeMWOrgContentsInjection
 
 WIKIAPI=https://www.mediawiki.org/w/api.php
 TITLE="Help:Editing_pages"

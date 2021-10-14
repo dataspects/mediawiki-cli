@@ -26,7 +26,7 @@
     if [ "$localSettings" != "null" ]; then lsInstrFound=true; fi
     ###
 
-    ./system-snapshots/take-restic-snapshot.sh BeforeDisabling-$EXTNAME
+    ./manage-snapshots/take-restic-snapshot.sh BeforeDisabling-$EXTNAME
 
     ###
     # Check installation aspects

@@ -11,6 +11,6 @@ if [ -n "$DEBUG" ] ; then echo "RUN LEX2110080552" ; fi
 ./view/view-mwm-config.sh
 exit
 ./manage-system/show-composerLocalJSON.sh
-./system-snapshots/view-restic-snapshots.sh
+./manage-snapshots/view-restic-snapshots.sh
 ./manage-extensions/show-extension-catalogue.sh
 # ./report-podman.sh

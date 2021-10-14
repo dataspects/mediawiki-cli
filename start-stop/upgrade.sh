@@ -8,7 +8,7 @@ source ./my-system.env
 echo -n "Enter MEDIAWIKI_IMAGE, e.g. 'docker.io/dataspects/mediawiki:1.35.1-2104141705': "
 read MEDIAWIKI_IMAGE
 
-$MEDIAWIKI_CLI/system-snapshots/take-restic-snapshot.sh BeforeUpgrade
+$MEDIAWIKI_CLI/manage-snapshots/take-restic-snapshot.sh BeforeUpgrade
 
 $MEDIAWIKI_CLI/manage-system/stop.sh
 $CONTAINER_COMMAND pod rm mwm-deployment-pod-0
@@ -16,7 +16,7 @@ $CONTAINER_COMMAND pod rm mwm-deployment-pod-0
 envsubst < mediawiki-installer.tpl > mediawiki-installer.yml
 $CONTAINER_COMMAND play kube mediawiki-installer.yml
 
-$MEDIAWIKI_CLI/system-snapshots/restore-restic-snapshot.sh latest
+$MEDIAWIKI_CLI/manage-snapshots/restore-restic-snapshot.sh latest
 
 source $MEDIAWIKI_CLI/lib/waitForMariaDB.sh
 

@@ -6,7 +6,7 @@ strs=(
     "runSMWRebuildData"
     "waitForMariaDB"
     "$CONTAINER_COMMAND pod"
-    "./system-snapshots/take-restic-snapshot.sh"
+    "./manage-snapshots/take-restic-snapshot.sh"
     "addToMWCLISQLite.php"
     "removeFromMWCLISQLite.php"
     "updatemwmLocalSettings.php"

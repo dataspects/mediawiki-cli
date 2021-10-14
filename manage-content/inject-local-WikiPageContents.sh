@@ -7,7 +7,7 @@ source ./my-system.env
 
 source ./lib/utils.sh
 
-# ./system-snapshots/take-restic-snapshot.sh BeforeLocalContentsInjection
+# ./manage-snapshots/take-restic-snapshot.sh BeforeLocalContentsInjection
 
 source ./lib/mediawiki-login-for-edit.sh
 

@@ -7,7 +7,7 @@ SNAPSHOT_ID=$1
 # right before running
 # if [[ $SNAPSHOT_ID != "latest" ]]
 # then
-#     ./system-snapshots/take-restic-snapshot.sh BeforeRestoring-$SNAPSHOT_ID
+#     ./manage-snapshots/take-restic-snapshot.sh BeforeRestoring-$SNAPSHOT_ID
 # fi
 
 rm -r /var/www/restoresnapshot

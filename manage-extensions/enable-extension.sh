@@ -34,7 +34,7 @@ then
 fi
 ###
 
-/var/www/manage/mediawiki-cli/system-snapshots/take-restic-snapshot.sh BeforeEnabling-$EXTNAME
+/var/www/manage/mediawiki-cli/manage-snapshots/take-restic-snapshot.sh BeforeEnabling-$EXTNAME
 
 ###
 # Run installation aspects
@@ -61,7 +61,7 @@ then
         do
             lsDirectives="$lsDirectives $lsLine"
         done
-        php /var/www/manage/mediawiki-cli/lib/addToMWCLISQLite.php "$EXTNAME" "$lsDirectives"
+        php /var/www/manage/mediawiki-cli/manage-config/addToMWCLISQLite.php "$EXTNAME" "$lsDirectives"
         if [[ $? == 0 ]]
         then
             echo "SUCCESS: $?"

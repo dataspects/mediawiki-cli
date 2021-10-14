@@ -8,7 +8,7 @@ source ./lib/utils.sh
 echo -n "Enter full GitHub clone URL, e.g. 'https://github.com/dataspects/dataspectsSystemCoreOntology.git': "
 read ONTOLOGY_URL
 
-./system-snapshots/take-restic-snapshot.sh BeforeGitHubOntologyContentsInjection
+./manage-snapshots/take-restic-snapshot.sh BeforeGitHubOntologyContentsInjection
 
 # Clone
 mkdir -p ontologies
