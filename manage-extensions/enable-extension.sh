@@ -18,6 +18,7 @@ declare lsDirectives
 getExtensionData $EXTNAME
 installationAspects=`getExtensionDataByKey "installation-aspects" "$extensionData"`
 composer=`getExtensionDataByKey "composer" "$installationAspects"`
+version=`getExtensionDataByKey "version" "$installationAspects"`
 repository=`getExtensionDataByKey "repository" "$installationAspects"`
 localSettings=`getExtensionDataByKey "localsettings" "$installationAspects"`
 if [ "$composer" != "null" ]; then cInstrFound=true; fi
@@ -43,7 +44,8 @@ then
     # CreateCampEMWCon2021: run composer correctly
     echo "Running composer..."
     # FIXME: running this removes everything from composer.json!
-    cd /var/www/html/w && COMPOSER=composer.local.json COMPOSER_HOME=/var/www/html/w php composer.phar require $composer
+    echo $(cat /var/www/html/w/composer.local.json | jq ".require += { \"$composer\": \"$version\"}") > /var/www/html/w/composer.local.json
+    cd /var/www/html/w && COMPOSER=composer.json COMPOSER_HOME=/var/www/html/w php composer.phar require $composer
     cd -
     echo "Ran composer"
 fi

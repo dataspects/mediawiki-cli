@@ -1,8 +1,9 @@
 #!/bin/bash
 
-CATALOGUE_URL=https://raw.githubusercontent.com/dataspects/mediawiki-installer/main/catalogues/extensions.json
+CATALOGUE_URL=https://raw.githubusercontent.com/dataspects/mediawiki-cli/main/catalogues/extensions.json
 
 # https://cameronnokes.com/blog/working-with-json-in-bash-using-jq/
+# https://gist.github.com/olih/f7437fb6962fb3ee9fe95bda8d2c8fa4
 
 getExtensionJSON () {
     catalogueJSON=$(curl -S \

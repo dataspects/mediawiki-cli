@@ -1,12 +1,9 @@
     #!/bin/bash
     # Public MWCLIBashScript: Disable extensions selected from $CATALOGUE_URL.
 
-    if [ "`ls /home`" != "" ] ; then source ./lib/runInContainerOnly.sh ; fi
-
-    # FIXME: handle multiple system setups
-    source ./manage-extensions/utils.sh
-    source ./lib/utils.sh
-    source ./lib/permissions.sh
+    source /var/www/manage/manage-extensions/utils.sh
+    source /var/www/manage/lib/utils.sh
+    source /var/www/manage/lib/permissions.sh
 
     # https://cameronnokes.com/blog/working-with-json-in-bash-using-jq/
     # https://edoras.sdsu.edu/doc/sed-oneliners.html
@@ -26,7 +23,7 @@
     if [ "$localSettings" != "null" ]; then lsInstrFound=true; fi
     ###
 
-    ./manage-snapshots/take-restic-snapshot.sh BeforeDisabling-$EXTNAME
+    /var/www/manage/mediawiki-cli/manage-snapshots/take-restic-snapshot.sh BeforeDisabling-$EXTNAME
 
     ###
     # Check installation aspects
@@ -41,7 +38,8 @@
     if [ $cInstrFound ]
     then
         echo "Running composer..."
-        cd /var/www/html/w && COMPOSER=composer.local.json COMPOSER_HOME=/var/www/html/w php composer.phar remove $composer
+        echo $(cat /var/www/html/w/composer.local.json | jq "del(.require.\"$composer\")") > /var/www/html/w/composer.local.json
+        cd /var/www/html/w && COMPOSER=composer.json COMPOSER_HOME=/var/www/html/w php composer.phar remove $composer
         cd -
         echo "Ran composer"
     fi
