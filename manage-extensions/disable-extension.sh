@@ -53,7 +53,7 @@
         echo `pwd`
         echo $localSettings | jq -r '.[]' | while read lsLine
         do
-            php /var/www/manage/mediawiki-cli/manage-config/removeFromMWMSQLite.php "$EXTNAME"
+            php /var/www/manage/mediawiki-cli/manage-config/removeFromMWMSQLite_by_name.php "$EXTNAME"
         done
     fi
     ###
