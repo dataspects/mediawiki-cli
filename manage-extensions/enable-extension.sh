@@ -45,7 +45,7 @@ then
     echo "Running composer..."
     # FIXME: running this removes everything from composer.json!
     echo $(cat /var/www/html/w/composer.local.json | jq ".require += { \"$composer\": \"$version\"}") > /var/www/html/w/composer.local.json
-    cd /var/www/html/w && COMPOSER=composer.json COMPOSER_HOME=/var/www/html/w php composer.phar require $composer
+    cd /var/www/html/w && COMPOSER=composer.json COMPOSER_HOME=/var/www/html/w php composer.phar update
     cd -
     echo "Ran composer"
 fi

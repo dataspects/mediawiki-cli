@@ -39,7 +39,7 @@
     then
         echo "Running composer..."
         echo $(cat /var/www/html/w/composer.local.json | jq "del(.require.\"$composer\")") > /var/www/html/w/composer.local.json
-        cd /var/www/html/w && COMPOSER=composer.json COMPOSER_HOME=/var/www/html/w php composer.phar remove $composer
+        cd /var/www/html/w && COMPOSER=composer.json COMPOSER_HOME=/var/www/html/w php composer.phar update
         cd -
         echo "Ran composer"
     fi
