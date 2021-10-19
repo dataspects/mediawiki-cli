@@ -56,4 +56,24 @@ while($res = $result->fetchArray(SQLITE3_ASSOC)){
 }
 print_r($mwmLocalSettingsString);
 
+echo "\n\nASPECT 7: Extensions reported by API:\n---\n";
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_SSL_VERIFYSTATUS, false);
+curl_setopt($ch, CURLOPT_URL, "http://localhost/w/api.php?action=query&meta=siteinfo&siprop=extensions&format=json");
+$metaExtensions = json_decode(curl_exec($ch), true);
+curl_close($ch);
+$extensions = array();
+foreach ($metaExtensions["query"]["extensions"] as $metaExtension) {
+    $version = "";
+    if(array_key_exists("version", $metaExtension)) {
+        $version = $metaExtension["version"];
+    }
+    $extensions[] = $metaExtension["name"]." (".$version.")";
+}
+sort($extensions);
+echo implode(", ", $extensions);
+
 echo "\n\n";
