@@ -11,6 +11,17 @@ function getWfLoadExtensions($lines) {
     return $wfLEs;
 }
 
+function getRequireExtensions($lines) {
+    $wfLEs = array();
+    foreach($lines as $lsline) {
+        preg_match('/#?require.+\/extensions\/(.+)\/.+;/', $lsline, $matches);
+        if(count($matches) > 0) {
+            $wfLEs[] = trim($matches[1]);
+        };
+    }
+    return $wfLEs;
+}
+
 // echo "ASPECT 1: Extensions code present in /var/www/html/w/extensions:\n---\n";
 $folders = array_diff(scandir("/var/www/html/w/extensions"), array('..', '.'));
 sort($folders);
@@ -19,7 +30,9 @@ sort($folders);
 // echo "\n\nASPECT 2: Extensions loaded by wfLoadExtension() in immutable /var/www/html/w/LocalSettings.php:\n---\n";
 $localSettingsArray = explode("\n", file_get_contents('/var/www/html/w/LocalSettings.php'));
 $wfLEs = getWfLoadExtensions($localSettingsArray);
+$rEs = getRequireExtensions($localSettingsArray);
 sort($wfLEs);
+sort($rEs);
 // echo implode(", ", $wfLEs);
 
 // echo "\n\nASPECT 3: Extensions loaded by immutable /var/www/html/w/composer.json:\n---\n";
@@ -78,7 +91,7 @@ sort($extensions);
 
 // PRINT
 printf("\n");
-$headers = array("w/extensions/" => $folders, "wfLoadExtensions()" => $wfLEs, "composer.json" => $composerjsonReq, "composer.local.json" => $composerlocaljsonReq, "mwmLocalSettings.php" => $wfLEs2, "mwmconfigdb.sqlite" => $mwmLocalSettingsString, "API" => $extensions);
+$headers = array("w/extensions/" => $folders, "wfLoadExtensions()" => $wfLEs, "require" => $rEs, "composer.json" => $composerjsonReq, "composer.local.json" => $composerlocaljsonReq, "mwmLocalSettings.php" => $wfLEs2, "mwmconfigdb.sqlite" => $mwmLocalSettingsString, "API" => $extensions);
 foreach($headers as $header => $variable) {
     printf($header."\t\t");
 }
