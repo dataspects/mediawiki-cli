@@ -90,22 +90,28 @@ sort($extensions);
 // echo implode(", ", $extensions);
 
 // PRINT
+printf("Highlight by adding            | egrep --color -i 'what you look for'\n");
 printf("\n");
 $headers = array("w/extensions/" => $folders, "wfLoadExtensions()" => $wfLEs, "require" => $rEs, "composer.json" => $composerjsonReq, "composer.local.json" => $composerlocaljsonReq, "mwmLocalSettings.php" => $wfLEs2, "mwmconfigdb.sqlite" => $mwmLocalSettingsString, "API" => $extensions);
+$numberOfAddedTabs = 3;
 foreach($headers as $header => $variable) {
-    printf($header."\t\t");
+    printf($header.str_repeat("\t", $numberOfAddedTabs));
 }
 printf("\n");
 foreach($headers as $header => $variable) {
-    printf(str_repeat("-", strlen($header))."\t\t");
+    printf(str_repeat("-", strlen($header)).str_repeat("\t", $numberOfAddedTabs));
 }
 printf("\n");
-$maxLength = 22;
 $tabWidth = 8;
-for ($x = 0; $x <= 60; $x++) {
+$manuallyAdded = 5;
+$continue = true;
+$x = 0;
+$maxLength = $numberOfAddedTabs * $tabWidth + $manuallyAdded;
+while ($continue) {
+    $contCount = 0;
     foreach($headers as $header => $variable) {
         $headerRest = $tabWidth - strlen($header) % $tabWidth;
-        $columnWidth = strlen($header) + $headerRest + (2 * $tabWidth);
+        $columnWidth = strlen($header) + $headerRest + ($numberOfAddedTabs * $tabWidth);
         if(array_key_exists($x, $variable)) {
             $ss = substr($variable[$x], 0, $maxLength);
             $tsToAdd = floor(($columnWidth - strlen($ss)) / $tabWidth);
@@ -118,7 +124,15 @@ for ($x = 0; $x <= 60; $x++) {
         } else {
             printf(str_repeat("\t", $columnWidth / $tabWidth - 1));
         }
+        // If the current aspect doesn't have a next element, then record this fact.
+        if(!array_key_exists($x, $variable)) {
+            $contCount++;
+        }
     }
+    // If in one loop none of the aspects have a next element, then stop.
+    if($contCount == count($headers)){
+        $continue = false;
+    }
+    $x++;
     printf("\n");
 }
-printf("\n");
