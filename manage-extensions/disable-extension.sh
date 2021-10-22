@@ -1,9 +1,9 @@
     #!/bin/bash
     # Public MWCLIBashScript: Disable extensions selected from $CATALOGUE_URL.
 
-    source /var/www/manage/mediawiki-cli/manage-extensions/utils.sh
-    source /var/www/manage/mediawiki-cli/lib/utils.sh
-    source /var/www/manage/mediawiki-cli/lib/permissions.sh
+    source /var/www/manage/manage-extensions/utils.sh
+    source /var/www/manage/lib/utils.sh
+    source /var/www/manage/lib/permissions.sh
 
     # https://cameronnokes.com/blog/working-with-json-in-bash-using-jq/
     # https://edoras.sdsu.edu/doc/sed-oneliners.html
@@ -23,7 +23,7 @@
     if [ "$localSettings" != "null" ]; then lsInstrFound=true; fi
     ###
 
-    /var/www/manage/mediawiki-cli/manage-snapshots/take-restic-snapshot.sh BeforeDisabling-$EXTNAME
+    /var/www/manage/manage-snapshots/take-restic-snapshot.sh BeforeDisabling-$EXTNAME
 
     ###
     # Check installation aspects
@@ -53,10 +53,10 @@
         echo `pwd`
         echo $localSettings | jq -r '.[]' | while read lsLine
         do
-            php /var/www/manage/mediawiki-cli/manage-config/removeFromMWMSQLite_by_name.php "$EXTNAME"
+            php /var/www/manage/manage-config/removeFromMWMSQLite_by_name.php "$EXTNAME"
         done
     fi
     ###
 
-    php /var/www/manage/mediawiki-cli/manage-config/compileMWMLocalSettings.php
+    php /var/www/manage/manage-config/compileMWMLocalSettings.php
     runMWUpdatePHP

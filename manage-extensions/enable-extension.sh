@@ -2,9 +2,9 @@
 # Public MWCLIBashScript: Enable extensions selected from $CATALOGUE_URL.
 
 # FIXME: handle multiple system setups
-source /var/www/manage/mediawiki-cli/lib/utils.sh
-source /var/www/manage/mediawiki-cli/manage-extensions/utils.sh
-source /var/www/manage/mediawiki-cli/lib/permissions.sh
+source /var/www/manage/lib/utils.sh
+source /var/www/manage/manage-extensions/utils.sh
+source /var/www/manage/lib/permissions.sh
 
 # https://cameronnokes.com/blog/working-with-json-in-bash-using-jq/
 # https://edoras.sdsu.edu/doc/sed-oneliners.html
@@ -35,13 +35,12 @@ then
 fi
 ###
 
-/var/www/manage/mediawiki-cli/manage-snapshots/take-restic-snapshot.sh BeforeEnabling-$EXTNAME
+/var/www/manage/manage-snapshots/take-restic-snapshot.sh BeforeEnabling-$EXTNAME
 
 ###
 # Run installation aspects
 if [ $cInstrFound ]
 then
-    # CreateCampEMWCon2021: run composer correctly
     echo "Running composer..."
     # FIXME: running this removes everything from composer.json!
     echo $(cat /var/www/html/w/composer.local.json | jq ".require += { \"$composer\": \"$version\"}") > /var/www/html/w/composer.local.json
@@ -53,6 +52,11 @@ fi
 if [ $rInstrFound ]
 then
     echo "Running repository"
+    if [ -d /var/www/html/w/extensions/$EXTNAME ]; then
+        printf "Removing '/var/www/html/w/extensions/$EXTNAME'...\n"
+        rm -r /var/www/html/w/extensions/$EXTNAME
+        printf "Removed '/var/www/html/w/extensions/$EXTNAME'...\n"
+    fi
     git clone $repository /var/www/html/w/extensions/$EXTNAME
 fi
 if [ $lsInstrFound ]
@@ -64,7 +68,7 @@ then
         do
             lsDirectives="$lsDirectives $lsLine"
         done
-        php /var/www/manage/mediawiki-cli/manage-config/addToMWMSQLite.php "$EXTNAME" "$lsDirectives"
+        php /var/www/manage/manage-config/addToMWMSQLite.php "$EXTNAME" "$lsDirectives"
         if [[ $? == 0 ]]
         then
             echo "SUCCESS: $?"
@@ -75,5 +79,5 @@ then
 fi
 ###
 
-php /var/www/manage/mediawiki-cli/manage-config/compileMWMLocalSettings.php
+php /var/www/manage/manage-config/compileMWMLocalSettings.php
 runMWUpdatePHP

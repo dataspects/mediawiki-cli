@@ -90,9 +90,9 @@ sort($extensions);
 // echo implode(", ", $extensions);
 
 // PRINT
-printf("Highlight by adding            | egrep --color -i 'what you look for'\n");
+printf("Highlight by adding            | egrep --color -i 'what you look for|wfLoadExtensions|---'\n");
 printf("\n");
-$headers = array("w/extensions/" => $folders, "wfLoadExtensions()" => $wfLEs, "require" => $rEs, "composer.json" => $composerjsonReq, "composer.local.json" => $composerlocaljsonReq, "mwmLocalSettings.php" => $wfLEs2, "mwmconfigdb.sqlite" => $mwmLocalSettingsString, "API" => $extensions);
+$headers = array("0-w/extensions/" => $folders, "1-wfLoadExtensions()" => $wfLEs, "2-require" => $rEs, "3-composer.json" => $composerjsonReq, "4-composer.local.json" => $composerlocaljsonReq, "5-mwmLocalSettings.php" => $wfLEs2, "6-mwmconfigdb.sqlite" => $mwmLocalSettingsString, "7-API" => $extensions);
 $numberOfAddedTabs = 3;
 foreach($headers as $header => $variable) {
     printf($header.str_repeat("\t", $numberOfAddedTabs));
