@@ -7,7 +7,7 @@ source ./lib/utils.sh
 echo -n "Enter full GitHub clone URL, e.g. 'https://github.com/dataspects/dataspectsSystemCoreOntology.git': "
 read ONTOLOGY_URL
 
-/var/www/manage/mediawiki-cli/manage-snapshots/take-restic-snapshot.sh BeforeGitHubOntologyContentsInjection
+/var/www/manage/manage-snapshots/take-restic-snapshot.sh BeforeGitHubOntologyContentsInjection
 
 # Clone
 mkdir -p /tmp/ontologies
@@ -24,11 +24,11 @@ for filename in /tmp/ontologies/$ONTOLOGY_NAME/objects/*; do
         for filename2 in $filename/*; do
             getPageData "$filename2"
             PAGENAME=$NAMESPACE:$PAGENAME
-            source /var/www/manage/mediawiki-cli/manage-content/mediawiki-inject.sh
+            source /var/www/manage/manage-content/mediawiki-inject.sh
         done
     else
         getPageData "$filename"
-        source /var/www/manage/mediawiki-cli/manage-content/mediawiki-inject.sh
+        source /var/www/manage/manage-content/mediawiki-inject.sh
     fi    
 done
 

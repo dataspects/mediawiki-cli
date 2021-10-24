@@ -1,39 +1,19 @@
 <?php
 
-function getWfLoadExtensions($lines) {
-    $wfLEs = array();
-    foreach($lines as $lsline) {
-        preg_match('/#?wfLoadExtension\( *["\']+(.*)["\']+ *\);/', $lsline, $matches);
-        if(count($matches) > 0) {
-            $wfLEs[] = trim($matches[1]);
-        };
-    }
-    return $wfLEs;
-}
-
-function getRequireExtensions($lines) {
-    $wfLEs = array();
-    foreach($lines as $lsline) {
-        preg_match('/#?require.+\/extensions\/(.+)\/.+;/', $lsline, $matches);
-        if(count($matches) > 0) {
-            $wfLEs[] = trim($matches[1]);
-        };
-    }
-    return $wfLEs;
-}
+require_once("/var/www/manage/manage-extensions/lib.php");
 
 // echo "ASPECT 1: Extensions code present in /var/www/html/w/extensions:\n---\n";
-$folders = array_diff(scandir("/var/www/html/w/extensions"), array('..', '.'));
-sort($folders);
+$foldersInExtensionsFolder = array_diff(scandir("/var/www/html/w/extensions"), array('..', '.'));
+sort($foldersInExtensionsFolder);
 // echo implode(", ", array_diff(scandir("/var/www/html/w/extensions"), array('..', '.')));
 
 // echo "\n\nASPECT 2: Extensions loaded by wfLoadExtension() in immutable /var/www/html/w/LocalSettings.php:\n---\n";
 $localSettingsArray = explode("\n", file_get_contents('/var/www/html/w/LocalSettings.php'));
-$wfLEs = getWfLoadExtensions($localSettingsArray);
-$rEs = getRequireExtensions($localSettingsArray);
-sort($wfLEs);
-sort($rEs);
-// echo implode(", ", $wfLEs);
+$wfLoadExtensionStatements = getWfLoadExtensions($localSettingsArray);
+$requireExtensionStatements = getRequireExtensions($localSettingsArray);
+sort($wfLoadExtensionStatements);
+sort($requireExtensionStatements);
+// echo implode(", ", $wfLoadExtensionStatements);
 
 // echo "\n\nASPECT 3: Extensions loaded by immutable /var/www/html/w/composer.json:\n---\n";
 $composerjsonArray = json_decode(file_get_contents('/var/www/html/w/composer.json'), true);
@@ -55,9 +35,9 @@ sort($composerlocaljsonReq);
 
 // echo "\n\nASPECT 5: Extensions loaded by compiled /var/www/config/mwmLocalSettings.php:\n---\n";
 $lines = explode("\n", file_get_contents('/var/www/config/mwmLocalSettings.php'));
-$wfLEs2 = getWfLoadExtensions($lines);
-sort($wfLEs2);
-// echo implode(", ", $wfLEs2);
+$wfLoadExtensionStatements2 = getWfLoadExtensions($lines);
+sort($wfLoadExtensionStatements2);
+// echo implode(", ", $wfLoadExtensionStatements2);
 
 // echo "\n\nASPECT 6: Extensions managed by /var/www/config/mwmconfigdb.sqlite:\n---\n";
 $db = new SQLite3("/var/www/config/mwmconfigdb.sqlite");
@@ -78,61 +58,63 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYSTATUS, false);
 curl_setopt($ch, CURLOPT_URL, "http://localhost/w/api.php?action=query&meta=siteinfo&siprop=extensions&format=json");
 $metaExtensions = json_decode(curl_exec($ch), true);
 curl_close($ch);
-$extensions = array();
+$extensionsReportedByAPI = array();
 foreach ($metaExtensions["query"]["extensions"] as $metaExtension) {
     $version = "";
     if(array_key_exists("version", $metaExtension)) {
         $version = $metaExtension["version"];
     }
-    $extensions[] = $metaExtension["name"]." (".$version.")";
+    $extensionsReportedByAPI[] = $metaExtension["name"]." (".$version.")";
 }
-sort($extensions);
+sort($extensionsReportedByAPI);
 // echo implode(", ", $extensions);
 
 // PRINT
-printf("Highlight by adding            | egrep --color -i 'what you look for|wfLoadExtensions|---'\n");
-printf("\n");
-$headers = array("0-w/extensions/" => $folders, "1-wfLoadExtensions()" => $wfLEs, "2-require" => $rEs, "3-composer.json" => $composerjsonReq, "4-composer.local.json" => $composerlocaljsonReq, "5-mwmLocalSettings.php" => $wfLEs2, "6-mwmconfigdb.sqlite" => $mwmLocalSettingsString, "7-API" => $extensions);
-$numberOfAddedTabs = 3;
-foreach($headers as $header => $variable) {
-    printf($header.str_repeat("\t", $numberOfAddedTabs));
-}
-printf("\n");
-foreach($headers as $header => $variable) {
-    printf(str_repeat("-", strlen($header)).str_repeat("\t", $numberOfAddedTabs));
-}
-printf("\n");
-$tabWidth = 8;
-$manuallyAdded = 5;
-$continue = true;
-$x = 0;
-$maxLength = $numberOfAddedTabs * $tabWidth + $manuallyAdded;
-while ($continue) {
-    $contCount = 0;
-    foreach($headers as $header => $variable) {
-        $headerRest = $tabWidth - strlen($header) % $tabWidth;
-        $columnWidth = strlen($header) + $headerRest + ($numberOfAddedTabs * $tabWidth);
-        if(array_key_exists($x, $variable)) {
-            $ss = substr($variable[$x], 0, $maxLength);
-            $tsToAdd = floor(($columnWidth - strlen($ss)) / $tabWidth);
-            $mod = ($columnWidth - strlen($ss)) % $tabWidth;
-            if($mod > 0) {
-                printf($ss.str_repeat("\t", $tsToAdd ));
-            } else {
-                printf($ss.str_repeat("\t", $tsToAdd - 1 ));
-            }
-        } else {
-            printf(str_repeat("\t", $columnWidth / $tabWidth - 1));
-        }
-        // If the current aspect doesn't have a next element, then record this fact.
-        if(!array_key_exists($x, $variable)) {
-            $contCount++;
-        }
-    }
-    // If in one loop none of the aspects have a next element, then stop.
-    if($contCount == count($headers)){
-        $continue = false;
-    }
-    $x++;
+if(!isset($doNotPrintMonitorTable)) {
+    printf("Highlight by adding            | egrep --color -i 'what you look for|wfLoadExtensions|---'\n");
     printf("\n");
+    $headers = array("0-w/extensions/" => $foldersInExtensionsFolder, "1-wfLoadExtensions()" => $wfLoadExtensionStatements, "2-require" => $requireExtensionStatements, "3-composer.json" => $composerjsonReq, "4-composer.local.json" => $composerlocaljsonReq, "5-mwmLocalSettings.php" => $wfLoadExtensionStatements2, "6-mwmconfigdb.sqlite" => $mwmLocalSettingsString, "7-API" => $extensionsReportedByAPI);
+    $numberOfAddedTabs = 3;
+    foreach($headers as $header => $variable) {
+        printf($header.str_repeat("\t", $numberOfAddedTabs));
+    }
+    printf("\n");
+    foreach($headers as $header => $variable) {
+        printf(str_repeat("-", strlen($header)).str_repeat("\t", $numberOfAddedTabs));
+    }
+    printf("\n");
+    $tabWidth = 8;
+    $manuallyAdded = 10;
+    $continue = true;
+    $x = 0;
+    $maxLength = $numberOfAddedTabs * $tabWidth + $manuallyAdded;
+    while ($continue) {
+        $contCount = 0;
+        foreach($headers as $header => $variable) {
+            $headerRest = $tabWidth - strlen($header) % $tabWidth;
+            $columnWidth = strlen($header) + $headerRest + ($numberOfAddedTabs * $tabWidth);
+            if(array_key_exists($x, $variable)) {
+                $ss = substr($variable[$x], 0, $maxLength);
+                $tsToAdd = floor(($columnWidth - strlen($ss)) / $tabWidth);
+                $mod = ($columnWidth - strlen($ss)) % $tabWidth;
+                if($mod > 0) {
+                    printf($ss.str_repeat("\t", $tsToAdd ));
+                } else {
+                    printf($ss.str_repeat("\t", $tsToAdd - 1 ));
+                }
+            } else {
+                printf(str_repeat("\t", $columnWidth / $tabWidth - 1));
+            }
+            // If the current aspect doesn't have a next element, then record this fact.
+            if(!array_key_exists($x, $variable)) {
+                $contCount++;
+            }
+        }
+        // If in one loop none of the aspects have a next element, then stop.
+        if($contCount == count($headers)){
+            $continue = false;
+        }
+        $x++;
+        printf("\n");
+    }
 }
