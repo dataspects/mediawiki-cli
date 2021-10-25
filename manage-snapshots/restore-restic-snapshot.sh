@@ -1,39 +1,58 @@
 #!/bin/bash
 # Public MWCLIBashScript: Restore system snapshot.
 
+if [[ -z "$1" ]]; then
+  echo 'You must provide a restic snapshot ID as $1!'
+  exit
+fi
+
 SNAPSHOT_ID=$1
 
 # If it is "latest", then we're coming from an upgrade, which already had a snapshot
 # right before running
-# if [[ $SNAPSHOT_ID != "latest" ]]
-# then
-#     ./manage-snapshots/take-restic-snapshot.sh BeforeRestoring-$SNAPSHOT_ID
-# fi
+if [[ $SNAPSHOT_ID != "latest" ]]
+then
+    ./manage-snapshots/take-restic-snapshot.sh BeforeRestoring-$SNAPSHOT_ID
+fi
 
-rm -r /var/www/restoresnapshot
-mkdir /var/www/restoresnapshot
+currentsnapshotFolder="/var/www/currentsnapshot"
+if [ -d $currentsnapshotFolder ]; then
+  printf "Emptying '$currentsnapshotFolder'...\n"
+  rm -r $currentsnapshotFolder/*
+  printf "Emptied '$currentsnapshotFolder'...\n"
+else
+  mkdir $currentsnapshotFolder
+fi
 
 restic -r s3:$AWS_S3_API/$AWS_S3_BUCKET \
     restore $SNAPSHOT_ID \
-        --target /var/www/restoresnapshot
+        --target $currentsnapshotFolder
 
-# cp $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/composer.local.json /var/www/html/w/composer.local.json; \
-# cp $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/composer.local.lock /var/www/html/w/composer.local.lock; \
-# cp $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/mwmconfigdb.sqlite /var/www/config/mwmconfigdb.sqlite; \
-# rm -rf /var/www/html/w/extensions/*;
-# cp -r --preserve=links $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/extensions/* /var/www/html/w/extensions/; \
-# rm -rf /var/www/html/w/skins/*;
-# cp -r --preserve=links $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/skins/* /var/www/html/w/skins/; \
-# rm -rf /var/www/html/w/images/*;
-# cp -r --preserve=links $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/images/* /var/www/html/w/images/; \
-# rm -rf /var/www/html/w/vendor/*;
-# cp -r --preserve=links $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/vendor/* /var/www/html/w/vendor/; \
-# rm -rf /etc/apache2/sites-available/*;
-# cp -r --preserve=links $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/sites-available/* /etc/apache2/sites-available/;
+printf "Copying files...\n"
+cp --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/$currentsnapshotFolder/composer.local.json /var/www/html/w/composer.local.json; \
+cp --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/$currentsnapshotFolder/composer.local.lock /var/www/html/w/composer.local.lock; \
+cp --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/$currentsnapshotFolder/mwmconfigdb.sqlite /var/www/config/mwmconfigdb.sqlite; \
+cp --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/$currentsnapshotFolder/mwmLocalSettings.php /var/www/config/mwmLocalSettings.php; \
+rm -rf /var/www/html/w/extensions/*;
+cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/$currentsnapshotFolder/extensions/* /var/www/html/w/extensions/; \
+rm -rf /var/www/html/w/skins/*;
+cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/$currentsnapshotFolder/skins/* /var/www/html/w/skins/; \
+rm -rf /var/www/html/w/images/*;
+cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/$currentsnapshotFolder/images/* /var/www/html/w/images/; \
+rm -rf /var/www/html/w/vendor/*;
+cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/$currentsnapshotFolder/vendor/* /var/www/html/w/vendor/; \
+printf "Copied files...\n"
 
-# mysql -h $MYSQL_HOST -u $MYSQL_USER -p$MYSQL_PASSWORD \
-#     $DATABASE_NAME < $CURRENT_RESOURCES_IN_CONTAINER/var/www/html/currentresources/db.sql
+# FIXME: necessary?
+printf "Chowning files...\n"
+chown -R www-data:root /var/www/html/w
+printf "Chowned files...\n"
 
-# php /var/www/manage/mediawiki-cli/manage-config/compileMWMLocalSettings.php
-# cd /var/www/html/w && COMPOSER_HOME=/var/www/html/w php composer.phar update
-# cd -
+printf "Restoring database...\n"
+mysql -h $MYSQL_HOST -u $MYSQL_USER -p$MYSQL_PASSWORD \
+    $DATABASE_NAME < $currentsnapshotFolder/$currentsnapshotFolder/db.sql
+printf "Restored database...\n"
+
+php /var/www/manage/manage-config/compileMWMLocalSettings.php
+cd /var/www/html/w && COMPOSER=composer.json COMPOSER_HOME=/var/www/html/w php composer.phar update
+cd -

@@ -2,7 +2,7 @@
 # Public MWCLIBashScript: Take system snapshot.
 
 if [[ -z "$1" ]]; then
-  echo 'You must provide a restic backup tag as $1!'
+  echo 'You must provide a restic snapshot tag as $1!'
   exit
 fi
 
@@ -25,7 +25,7 @@ printf "mysqldump mediawiki completed.\n"
 
 ######
 # STEP 2: Copy folders and files
-cp -r \
+cp --preserve=links,mode,ownership,timestamps -r \
     /var/www/html/w/composer.local.json \
     /var/www/html/w/composer.local.lock \
     /var/www/html/w/extensions \
@@ -40,8 +40,8 @@ printf "copy folders and files completed.\n"
 
 ######
 # STEP 3: Run restic backup
-# restic -r s3:$AWS_S3_API/$AWS_S3_BUCKET --tag $TAG \
-#   backup $currentsnapshotFolder
+restic -r s3:$AWS_S3_API/$AWS_S3_BUCKET --tag $TAG \
+  backup $currentsnapshotFolder
 printf "completed running restic backup.\n"
 
 # FIXME: How to handle:
