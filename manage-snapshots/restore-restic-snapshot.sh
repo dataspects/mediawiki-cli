@@ -28,11 +28,14 @@ restic -r s3:$AWS_S3_API/$AWS_S3_BUCKET \
     restore $SNAPSHOT_ID \
         --target $currentsnapshotFolder
 
+# FIXME: are // a problem in paths?
+
 printf "Copying files...\n"
 cp --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/$currentsnapshotFolder/composer.local.json /var/www/html/w/composer.local.json; \
 cp --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/$currentsnapshotFolder/composer.local.lock /var/www/html/w/composer.local.lock; \
 cp --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/$currentsnapshotFolder/mwmconfigdb.sqlite /var/www/config/mwmconfigdb.sqlite; \
 cp --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/$currentsnapshotFolder/mwmLocalSettings.php /var/www/config/mwmLocalSettings.php; \
+cp --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/$currentsnapshotFolder/mwmLocalSettings_manual.php /var/www/config/mwmLocalSettings_manual.php; \
 rm -rf /var/www/html/w/extensions/*;
 cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/$currentsnapshotFolder/extensions/* /var/www/html/w/extensions/; \
 rm -rf /var/www/html/w/skins/*;

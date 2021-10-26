@@ -30,7 +30,7 @@ if [ -n "$DEBUG" ] ; then echo "RUN LEX2110111218" ; fi
 ###############################################################################
 # LOCAL CONFIG
 ./run-shared-sh-command.sh initialize-mwcliconfigdb.sh
-./run-shared-php-command.sh 'addToMWMSQLite.php "maintenance" "\$wgReadOnly = \"ReadOnly\";"'
+./run-shared-php-command.sh 'addLineToMWMSQLite.php "maintenance" "\$wgReadOnly = \"ReadOnly\";"'
 ./run-shared-php-command.sh view-mwm-config.php
 ./run-shared-php-command.sh compileMWMLocalSettings.php
 ###############################################################################

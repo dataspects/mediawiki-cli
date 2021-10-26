@@ -86,7 +86,7 @@ function enableExtension($extensionName) {
     }
     if(property_exists($installationAspects, "localsettings")) {
         foreach($installationAspects->localsettings as $lsd) {
-            addToMWMSQLite($extensionName, $lsd);
+            addLineToMWMSQLite($extensionName, $lsd);
         }
         compileMWMLocalSettings();
     }

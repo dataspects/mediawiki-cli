@@ -34,6 +34,7 @@ cp --preserve=links,mode,ownership,timestamps -r \
     /var/www/html/w/vendor \
     /var/www/config/mwmconfigdb.sqlite \
     /var/www/config/mwmLocalSettings.php \
+    /var/www/config/mwmLocalSettings_manual.php \
     $currentsnapshotFolder
 
 printf "copy folders and files completed.\n"
