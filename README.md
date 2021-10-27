@@ -22,7 +22,7 @@
 | `./manage-extensions/disable-extension.sh  <EXTENSION_NAME>` | **<span style="color: red">!</span>** Disable [MWStake-certified extensions](https://raw.githubusercontent.com/dataspects/mediawiki-cli/main/catalogues/extensions.json) |
 | `./manage-content/inject-ontology-WikiPageContents.sh` | **<span style="color: red">!</span>** Inject content from a repository ([example](https://github.com/dataspects/dataspectsSystemCoreOntology)) |
 | `php manage-extensions/monitor.php` | View extensions installation aspects |
-| `./manage-content/inject-local-WikiPageContents.sh` | **<span style="color: red">!</span>** Inject content from [WikiPageContents](https://github.com/dataspects/mediawiki-cli/tree/main/WikiPageContents) |
+| `./manage-content/inject-local-wikitext.sh` | **<span style="color: red">!</span>** Inject content from [WikiPageContents](https://github.com/dataspects/mediawiki-cli/tree/main/WikiPageContents) |
 | `./manage-content/inject-manage-page-from-mediawiki.org.sh` | **<span style="color: red">!</span>** Copy content from wiki A into a wiki B (e.g. from mediawiki.org) |
 | `./manage-snapshots/view-restic-snapshots.sh` | <img src="https://restic.readthedocs.io/en/stable/_static/logo.png" height="20"/> [View snapshots](https://restic.readthedocs.io/en/stable/045_working_with_repos.html) |
 | `./manage-snapshots/take-restic-snapshot.sh` | <img src="https://restic.readthedocs.io/en/stable/_static/logo.png" height="20"/> [Take snapshot](https://restic.readthedocs.io/en/stable/040_backup.html) |
