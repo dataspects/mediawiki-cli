@@ -1,6 +1,5 @@
 #!/bin/bash
 # Public MWCLIBashScript: Check the current contents of $SYSTEM_ROOT_FOLDER_ON_HOSTING_SYSTEM/w/composer.local.json.
-source ./my-system.env
 if [ -n "$DEBUG" ] ; then echo "RUN LEX2110080607" ; fi
 
 
