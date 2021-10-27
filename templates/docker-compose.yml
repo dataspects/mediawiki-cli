@@ -1,0 +1,60 @@
+version: "3.7"
+services:
+  mariadb:
+    image: mariadb:10.5.12
+    container_name: mariadb
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+    volumes:
+      - mariadb_data:/var/lib/mysql
+  wiki:
+    image: # See https://hub.docker.com/r/dataspects/mediawiki
+    container_name: wiki
+    restart: always
+    depends_on:
+      - mariadb
+    volumes:
+      - /home/ubuntu/mediawiki-cli:/var/www/manage # mediawiki-cli development volume
+      - wiki_config:/var/www/config
+      - wiki_extensions:/var/www/html/w/extensions
+      - wiki_skins:/var/www/html/w/skins
+      - wiki_vendor:/var/www/html/w/vendor
+      - wiki_images:/var/www/html/w/images
+      - /home/ubuntu/.local/share/docker/volumes/mediawiki0_config/_data/composer.local.json:/var/www/html/w/composer.local.json
+      - /home/ubuntu/.local/share/docker/volumes/mediawiki0_config/_data/composer.local.lock:/var/www/html/w/composer.local.lock
+    environment:
+      - AWS_S3_API=
+      - AWS_ACCESS_KEY_ID=
+      - AWS_SECRET_ACCESS_KEY=
+      - AWS_S3_BUCKET=
+      - RESTIC_PASSWORD=
+      - MYSQL_PASSWORD=
+      - DATABASE_NAME=
+      - MYSQL_USER=
+      - MYSQL_HOST=
+      - WIKI_ADMIN_USERNAME=
+      - WIKI_ADMIN_PASSWORD=
+    ports:
+      - 8080:80
+    extra_hosts:
+      - "wiki.snoopy:127.0.0.1"
+volumes:
+  mariadb_data:
+    driver: local
+    name: mariadb_data
+  wiki_config:
+    driver: local
+    name: wiki_config
+  wiki_extensions:
+    driver: local
+    name: wiki_extensions
+  wiki_skins:
+    driver: local
+    name: wiki_skins
+  wiki_vendor:
+    driver: local
+    name: wiki_vendor
+  wiki_images:
+    driver: local
+    name: wiki_images
