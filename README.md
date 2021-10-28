@@ -42,3 +42,14 @@
 <img src="images/snapshots.png" alt="dataaspects mediawiki-cli restic snapshots">
     <figcaption>dataspects/mediawiki-cli's <a href="https://github.com/dataspects/mediawiki-cli/blob/main/manage-snapshots/view-restic-snapshots.sh">view-restic-snapshots</a></figcaption>
 </figure>
+
+## Upgrading
+
+When Docker initializes volumes, the corresponding contents from inside the container end up in the persistent volumes.
+
+FIXME: **When upgrading by running a new container, the `skins/`, `vendor/` and `extensions/` folders must be consolidated.**:
+
+Let's say we upgrade from 1.35 to 1.36 and we had composer.local.json managing some content in `vendor/`:
+
+1. Merge the new 1.36 `skins/`, `vendor/` and `extensions/` content into the corresponding volumes, overwriting existing content and adding new content? (This would add new skins/extensions coming with MediaWiki 1.36 and/or [being added by dataspects](https://github.com/dataspects/dataspectsSystemBuilder/tree/master/ansible_templates).)
+2. Run a composer install or update?
