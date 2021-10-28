@@ -28,9 +28,16 @@
 | `./manage-snapshots/take-restic-snapshot.sh` | <img src="https://restic.readthedocs.io/en/stable/_static/logo.png" height="20"/> [Take snapshot](https://restic.readthedocs.io/en/stable/040_backup.html) |
 | `./manage-snapshots/restore-restic-snapshot.sh` | <img src="https://restic.readthedocs.io/en/stable/_static/logo.png" height="20"/> [Restore snapshot](https://restic.readthedocs.io/en/stable/050_restore.html) |
 
+## Component Logics
+
+<figure>
+<img src="images/component-logics.png" alt="dataaspects mediawiki-cli component logics">
+    <figcaption>dataspects/mediawiki-cli's <a href="https://github.com/dataspects/mediawiki-cli/blob/main/manage-snapshots/view-restic-snapshots.sh">view-restic-snapshots</a></figcaption>
+</figure>
+
 ## Snapshots
 
 <figure>
-<img src="images/snapshots.png" alt="The Bread Dog">
+<img src="images/snapshots.png" alt="dataaspects mediawiki-cli restic snapshots">
     <figcaption>dataspects/mediawiki-cli's <a href="https://github.com/dataspects/mediawiki-cli/blob/main/manage-snapshots/view-restic-snapshots.sh">view-restic-snapshots</a></figcaption>
 </figure>
