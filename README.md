@@ -53,3 +53,6 @@ Let's say we upgrade from 1.35 to 1.36 and we had composer.local.json managing s
 
 1. Merge the new 1.36 `skins/`, `vendor/` and `extensions/` content into the corresponding volumes, overwriting existing content and adding new content? (This would add new skins/extensions coming with MediaWiki 1.36 and/or [being added by dataspects](https://github.com/dataspects/dataspectsSystemBuilder/tree/master/ansible_templates).)
 2. Run a composer install or update?
+
+HACK:
+`rm -r temp/* && docker cp $(docker create --rm dataspects/mediawiki:1.36.2-3.2.3_211026-aarch64):/var/www/html/w/<vendor|skins|extensions>/. temp/ && docker cp temp/. smwcindykate:/var/www/html/w/<vendor|skins|extensions>/`
