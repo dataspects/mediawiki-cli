@@ -1,5 +1,6 @@
 #!/bin/bash
 # Public MWCLIBashScript: Check out primary system aspects.
+clear
 printf "\n\033[0;32m\e[1mConfig database entries (SQLite)\033[0m"
 printf "\n==================================\n"
 php ./manage-config/view-mwm-config.php
