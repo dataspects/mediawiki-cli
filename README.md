@@ -27,6 +27,7 @@
 | `./manage-snapshots/view-restic-snapshots.sh` | <img src="https://restic.readthedocs.io/en/stable/_static/logo.png" height="20"/> [View snapshots](https://restic.readthedocs.io/en/stable/045_working_with_repos.html) |
 | `./manage-snapshots/take-restic-snapshot.sh` | <img src="https://restic.readthedocs.io/en/stable/_static/logo.png" height="20"/> [Take snapshot](https://restic.readthedocs.io/en/stable/040_backup.html) |
 | `./manage-snapshots/restore-restic-snapshot.sh` | <img src="https://restic.readthedocs.io/en/stable/_static/logo.png" height="20"/> [Restore snapshot](https://restic.readthedocs.io/en/stable/050_restore.html) |
+| `./manage-snapshots/diff-restic-snapshots.sh` | <img src="https://restic.readthedocs.io/en/stable/_static/logo.png" height="20"/> [Compare snapshots](https://restic.readthedocs.io/en/stable/040_backup.html?highlight=diff#comparing-snapshots) |
 
 ## Component Logics
 
