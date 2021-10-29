@@ -33,23 +33,7 @@ foreach($composerjsonArray["require"] as $ext => $version) {
 sort($composerlocaljsonReq);
 // echo implode(", ", $composerlocaljsonReq);
 
-// echo "\n\nASPECT 5: Extensions loaded by compiled /var/www/config/mwmLocalSettings.php:\n---\n";
-$lines = explode("\n", file_get_contents('/var/www/config/mwmLocalSettings.php'));
-$wfLoadExtensionStatements2 = getWfLoadExtensions($lines);
-sort($wfLoadExtensionStatements2);
-// echo implode(", ", $wfLoadExtensionStatements2);
-
-// echo "\n\nASPECT 6: Extensions managed by /var/www/config/mwmconfigdb.sqlite:\n---\n";
-$db = new SQLite3("/var/www/config/mwmconfigdb.sqlite");
-$stmt = $db->prepare("SELECT localsettingsdirectives, name FROM extensions");
-$result = $stmt->execute();
-$mwmLocalSettingsString = [];
-while($res = $result->fetchArray(SQLITE3_ASSOC)){
-    $mwmLocalSettingsString[] = trim($res["name"]);
-}
-// print_r($mwmLocalSettingsString);
-
-// echo "\n\nASPECT 7: Extensions reported by API:\n---\n";
+// echo "\n\nASPECT 5: Extensions reported by API:\n---\n";
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
@@ -71,9 +55,9 @@ sort($extensionsReportedByAPI);
 
 // PRINT
 if(!isset($doNotPrintMonitorTable)) {
-    printf("Highlight by adding            | egrep --color -i 'what you look for|wfLoadExtensions|---'\n");
+    printf("Highlight by adding | egrep --color -i 'what you look for|wfLoadExtensions|---'\n");
     printf("\n");
-    $headers = array("0-w/extensions/" => $foldersInExtensionsFolder, "1-wfLoadExtensions()" => $wfLoadExtensionStatements, "2-require" => $requireExtensionStatements, "3-composer.json" => $composerjsonReq, "4-composer.local.json" => $composerlocaljsonReq, "5-mwmLocalSettings.php" => $wfLoadExtensionStatements2, "6-mwmconfigdb.sqlite" => $mwmLocalSettingsString, "7-API" => $extensionsReportedByAPI);
+    $headers = array("0-w/extensions/" => $foldersInExtensionsFolder, "1-wfLoadExtensions()" => $wfLoadExtensionStatements, "2-require" => $requireExtensionStatements, "3-composer.json" => $composerjsonReq, "4-composer.local.json" => $composerlocaljsonReq, "5-API" => $extensionsReportedByAPI);
     $numberOfAddedTabs = 3;
     foreach($headers as $header => $variable) {
         printf($header.str_repeat("\t", $numberOfAddedTabs));

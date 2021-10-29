@@ -16,7 +16,7 @@
 | In `docker exec -it --workdir /var/www/manage/ <WIKI_CONTAINER_NAME> /bin/bash` run... | Purpose |
 | ---------------------------------------------- | ------- |
 | `./status.sh` | Status report |
-| `php ./manage-config/view-mwm-config.php` | Check LocalSettings.php customizations (see Concepts below) |
+| `php ./manage-config/view-mwm-config.php` | Check LocalSettings.php customizations (see Concepts) |
 | `./manage-extensions/show-extension-catalogue.sh` | View [MWStake-certified extensions](https://raw.githubusercontent.com/dataspects/mediawiki-cli/main/catalogues/extensions.json) |
 | `./manage-extensions/enable-extension.sh <EXTENSION_NAME>` | **<span style="color: red">!</span>** Enable [MWStake-certified extensions](https://raw.githubusercontent.com/dataspects/mediawiki-cli/main/catalogues/extensions.json) |
 | `./manage-extensions/disable-extension.sh  <EXTENSION_NAME>` | **<span style="color: red">!</span>** Disable [MWStake-certified extensions](https://raw.githubusercontent.com/dataspects/mediawiki-cli/main/catalogues/extensions.json) |
@@ -41,6 +41,13 @@
 <figure>
 <img src="images/snapshots.png" alt="dataaspects mediawiki-cli restic snapshots">
     <figcaption>dataspects/mediawiki-cli's <a href="https://github.com/dataspects/mediawiki-cli/blob/main/manage-snapshots/view-restic-snapshots.sh">view-restic-snapshots</a></figcaption>
+</figure>
+
+## Extensions Monitor
+
+<figure>
+<img src="images/extensions-monitor.png" alt="dataaspects mediawiki-cli extensions monitor">
+    <figcaption>dataspects/mediawiki-cli's extensions monitor</figcaption>
 </figure>
 
 ## Upgrading
