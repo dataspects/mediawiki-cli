@@ -1,7 +1,7 @@
 # dataspects mediawiki-cli
 
 * dataspects mediawiki-cli is is a tool set for managing MediaWiki instances on [dataspects Snoopy](https://github.com/dataspects/snoopy).
-* `mediawiki-cli` is exclusively used through [`dataspects/mediawiki`](https://hub.docker.com/r/dataspects/mediawiki) container images.
+* `mediawiki-cli` is exclusively used through [`dataspects/mediawiki`](https://hub.docker.com/r/dataspects/mediawiki) container images ([docker build](https://github.com/dataspects/dataspectsSystemBuilder/tree/master/docker-images/mediawiki)).
 * *For a development setup, see `mediawiki-cli production/development volume` in `templates/docker-compose.yml`.*
 
 ## Concepts
