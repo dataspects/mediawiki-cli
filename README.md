@@ -84,3 +84,7 @@ HACK:
 13. At `/var/www/manage/#` run `status.sh`
 ---
 14. At `/var/www/config` create the file `mwmLocalSettings_manual.php` with content `<?php`
+---
+15. At `/var/www/manage` create the file `./manage-extensions/show-extension-catalogue.sh`<br/>&rarr; **which extensions can be managed?**
+16. At `/var/www/manage` create the file `php ./manage-extensions/monitor.php`<br/>&rarr; **different perspectives on the wikis' extensions**<br/>
+(`php ./manage-extensions/monitor.php | egrep --color -i 'labeled|wfLoadExtensions|---'`)

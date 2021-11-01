@@ -3,6 +3,8 @@
 # https://cameronnokes.com/blog/working-with-json-in-bash-using-jq/
 # https://edoras.sdsu.edu/doc/sed-oneliners.html
 
+source /var/www/manage/lib/utils.sh
+
 if [[ -z "$1" ]]; then
   echo 'You must provide an extension name as $1!'
   exit
