@@ -73,13 +73,14 @@ HACK:
 5. Run `docker-compose up`
 6. Enter mymediawiki's process namespace by running `docker exec -it --workdir /var/www/manage mymediawiki /bin/bash`
 7. At `/var/www/manage/install#` run `initialize-database.sh` and `import-database.sh`
-8. At `/var/www/html/w#` run `php maintenance/update.php`
+8. At `/var/www/html/w#` run `php maintenance/update.php --quick`
 ---
 9. At `/var/www/manage/#` run `status.sh`
 ---
-10. At `/var/www/manage/#` run `php manage-config/addLineToMWMSQLite.php "config" "\$wgServer = 'http://mymediawiki:8080';"`
-11. At `/var/www/manage/#` run `php manage-config/compileMWMLocalSettings.php`
+10. At `/var/www/manage/#` run `./manage-config/initialize-mwcliconfigdb.sh`
+11. At `/var/www/manage/#` run `php manage-config/addLineToMWMSQLite.php "config" "\$wgServer = 'http://mymediawiki:8080';"`
+12. At `/var/www/manage/#` run `php manage-config/compileMWMLocalSettings.php`
 ---
-12. At `/var/www/manage/#` run `status.sh`
+13. At `/var/www/manage/#` run `status.sh`
 ---
-13. At `/var/www/config` create the file `mwmLocalSettings_manual.php` with content `<?php`
+14. At `/var/www/config` create the file `mwmLocalSettings_manual.php` with content `<?php`
