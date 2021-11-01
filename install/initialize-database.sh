@@ -1,7 +1,6 @@
 #!/bin/bash
-# Public MWMBashScript: Upgrade MWM System to new container image from https://hub.docker.com/r/dataspects/mediawiki/tags
 
-# echo "Create database and user..."
+echo "Create $DATABASE_NAME and $MYSQL_USER..."
 mysql -h $MYSQL_HOST -u root -p$MYSQL_ROOT_PASSWORD \
   -e " CREATE DATABASE IF NOT EXISTS $DATABASE_NAME;
         CREATE USER '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
