@@ -7,7 +7,3 @@ mysql -h $MYSQL_HOST -u root -p$MYSQL_ROOT_PASSWORD \
         CREATE USER '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
         GRANT ALL PRIVILEGES ON $DATABASE_NAME.* TO '$MYSQL_USER'@'%';
         FLUSH PRIVILEGES;"
-
-echo "Import database..."
-  mysql -h $MYSQL_HOST -u $MYSQL_USER -p$MYSQL_PASSWORD \
-  mediawiki < /var/www/html/w/db.sql

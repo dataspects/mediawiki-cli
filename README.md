@@ -63,3 +63,13 @@ Let's say we upgrade from 1.35 to 1.36 and we had composer.local.json managing s
 
 HACK:
 `rm -r temp/* && docker cp $(docker create --rm dataspects/mediawiki:1.36.2-3.2.3_211026-aarch64):/var/www/html/w/<vendor|skins|extensions>/. temp/ && docker cp temp/. smwcindykate:/var/www/html/w/<vendor|skins|extensions>/`
+
+## Install a MediaWiki instance using mediawiki-cli
+
+1. Create a folder `mymediawiki/`
+2. Copy `templates/docker-compose.yml` into `mymediawiki/`
+3. Fill in all `...` in `mymediawiki/docker-compose.yml`
+4. Create `mymediawiki/composer.local.json` and `mymediawiki/composer.local.lock` each with content `{}`
+5. Run docker-compose
+6. Enter mymediawiki's process namespace: `docker exec -it mymediawiki /bin/bash`
+7. At `/var/www/manage/install#` run `initialize-database.sh` and `import-database.sh`
