@@ -10,12 +10,13 @@ services:
     volumes:
       - mariadb_data:/var/lib/mysql
   mymediawiki:
-    image: dataspects/mediawiki:1.36.2-3.2.3_2111011627-x86_64
+    image: # get newest from https://hub.docker.com/r/dataspects/mediawiki/tags
     container_name: mymediawiki
     restart: always
     depends_on:
       - mariadb
     volumes:
+      # - /home/lex/mediawiki-cli:/var/www/manage # mediawiki-cli development volume
       - mymediawiki_config:/var/www/config
       - mymediawiki_extensions:/var/www/html/w/extensions
       - mymediawiki_skins:/var/www/html/w/skins

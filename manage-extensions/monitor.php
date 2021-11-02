@@ -8,9 +8,15 @@ sort($foldersInExtensionsFolder);
 // echo implode(", ", array_diff(scandir("/var/www/html/w/extensions"), array('..', '.')));
 
 // echo "\n\nASPECT 2: Extensions loaded by wfLoadExtension() in immutable /var/www/html/w/LocalSettings.php:\n---\n";
-$localSettingsArray = explode("\n", file_get_contents('/var/www/html/w/LocalSettings.php'));
-$wfLoadExtensionStatements = getWfLoadExtensions($localSettingsArray);
-$requireExtensionStatements = getRequireExtensions($localSettingsArray);
+$containerInternalLocalSettingsArray = explode("\n", file_get_contents('/var/www/html/w/LocalSettings.php'));
+$wfLoadExtensionStatements = getWfLoadExtensions($containerInternalLocalSettingsArray);
+$requireExtensionStatements = getRequireExtensions($containerInternalLocalSettingsArray);
+$sqliteLocalSettingsArray = explode("\n", file_get_contents('/var/www/config/mwmLocalSettings.php'));
+$wfLoadExtensionStatements = array_merge($wfLoadExtensionStatements, getWfLoadExtensions($sqliteLocalSettingsArray));
+$requireExtensionStatements = array_merge($requireExtensionStatements, getRequireExtensions($sqliteLocalSettingsArray));
+$manualLocalSettingsArray = explode("\n", file_get_contents('/var/www/html/w/mwmLocalSettings_manual.php'));
+$wfLoadExtensionStatements = array_merge($wfLoadExtensionStatements, getWfLoadExtensions($manualLocalSettingsArray));
+$requireExtensionStatements = array_merge($requireExtensionStatements, getRequireExtensions($manualLocalSettingsArray));
 sort($wfLoadExtensionStatements);
 sort($requireExtensionStatements);
 // echo implode(", ", $wfLoadExtensionStatements);
