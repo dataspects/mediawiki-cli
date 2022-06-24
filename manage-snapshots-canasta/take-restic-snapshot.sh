@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /home/lex/Canasta-DockerCompose/.env
+source $CANASTA_ROOT/.env
 
 if [[ -z "$1" ]]; then
   echo 'You must provide a restic snapshot tag as $1!'
@@ -9,7 +9,7 @@ fi
 
 TAG=$1
 printf "Taking snapshot '$TAG'...\n"
-currentsnapshotFolder="/home/lex/Canasta-DockerCompose/currentsnapshot"
+currentsnapshotFolder="$CANASTA_ROOT/currentsnapshot"
 if [ -d $currentsnapshotFolder ]; then
   printf "Emptying '$currentsnapshotFolder'...\n"
   sudo rm -r $currentsnapshotFolder/*
@@ -28,10 +28,10 @@ printf "mysqldump mediawiki completed.\n"
 ######
 # STEP 2: Copy folders and files
 cp --preserve=links,mode,ownership,timestamps -r \
-    /home/lex/Canasta-DockerCompose/config \
-    /home/lex/Canasta-DockerCompose/extensions \
-    /home/lex/Canasta-DockerCompose/images \
-    /home/lex/Canasta-DockerCompose/skins \
+    $CANASTA_ROOT/config \
+    $CANASTA_ROOT/extensions \
+    $CANASTA_ROOT/images \
+    $CANASTA_ROOT/skins \
     $currentsnapshotFolder
 
 printf "copy folders and files completed.\n"
@@ -39,7 +39,7 @@ printf "copy folders and files completed.\n"
 ######
 # STEP 3: Run restic backup
 sudo docker run \
-    --rm -i --env-file /home/lex/Canasta-DockerCompose/.env \
+    --rm -i --env-file $CANASTA_ROOT/.env \
     -v $currentsnapshotFolder:/currentsnapshot \
     restic/restic \
     -r s3:$AWS_S3_API/$AWS_S3_BUCKET --tag $TAG \

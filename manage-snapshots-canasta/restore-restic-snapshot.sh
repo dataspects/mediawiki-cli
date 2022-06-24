@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /home/lex/Canasta-DockerCompose/.env
+source $CANASTA_ROOT/.env
 
 if [[ -z "$1" ]]; then
   echo 'You must provide a restic snapshot ID as $1!'
@@ -16,7 +16,7 @@ then
     ./take-restic-snapshot.sh BeforeRestoring-$SNAPSHOT_ID
 fi
 
-currentsnapshotFolder="/home/lex/Canasta-DockerCompose/currentsnapshot"
+currentsnapshotFolder="$CANASTA_ROOT/currentsnapshot"
 if [ -d $currentsnapshotFolder ]; then
   printf "Emptying '$currentsnapshotFolder'...\n"
   sudo rm -r $currentsnapshotFolder/*
@@ -26,7 +26,7 @@ else
 fi
 
 sudo docker run \
-    --rm -i --env-file /home/lex/Canasta-DockerCompose/.env \
+    --rm -i --env-file $CANASTA_ROOT/.env \
     -v $currentsnapshotFolder:/currentsnapshot \
     restic/restic \
     -r s3:$AWS_S3_API/$AWS_S3_BUCKET \
@@ -36,14 +36,14 @@ sudo docker run \
 # FIXME: are // a problem in paths?
 
 printf "Copying files...\n"
-sudo rm -rf /home/lex/Canasta-DockerCompose/config/*;
-cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/currentsnapshot/config/* /home/lex/Canasta-DockerCompose/config/; \
-sudo rm -rf /home/lex/Canasta-DockerCompose/extensions/*;
-cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/currentsnapshot/extensions/* /home/lex/Canasta-DockerCompose/extensions/; \
-sudo rm -rf /home/lex/Canasta-DockerCompose/images/*;
-cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/currentsnapshot/images/* /home/lex/Canasta-DockerCompose/images/; \
-sudo rm -rf /home/lex/Canasta-DockerCompose/skins/*;
-cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/currentsnapshot/skins/* /home/lex/Canasta-DockerCompose/skins/; \
+sudo rm -rf $CANASTA_ROOT/config/*;
+cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/currentsnapshot/config/* $CANASTA_ROOT/config/; \
+sudo rm -rf $CANASTA_ROOT/extensions/*;
+cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/currentsnapshot/extensions/* $CANASTA_ROOT/extensions/; \
+sudo rm -rf $CANASTA_ROOT/images/*;
+cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/currentsnapshot/images/* $CANASTA_ROOT/images/; \
+sudo rm -rf $CANASTA_ROOT/skins/*;
+cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/currentsnapshot/skins/* $CANASTA_ROOT/skins/; \
 printf "Copied files...\n"
 
 printf "Restoring database...\n"
