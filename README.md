@@ -17,12 +17,12 @@ AWS_S3_BUCKET=
 RESTIC_PASSWORD=
 ```
 2. Clone this repo onto your Canasta server
-3. Use the scripts providing `CANASTA_ROOT=/path/to/your/Canasta-DockerCompose/`
+3. Use the scripts providing `CANASTA_ROOT=/path/to/your/Canasta-DockerCompose`
 ```
-export CANASTA_ROOT=/path/to/your/Canasta-DockerCompose/
+export CANASTA_ROOT=/path/to/your/Canasta-DockerCompose
 ./view-restic-snapshots.sh
 ```
 or
 ```
-CANASTA_ROOT=/path/to/your/Canasta-DockerCompose/ ./view-restic-snapshots.sh
+CANASTA_ROOT=/path/to/your/Canasta-DockerCompose ./view-restic-snapshots.sh
 ```
