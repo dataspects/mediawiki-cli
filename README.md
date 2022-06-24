@@ -2,7 +2,9 @@
 
 This repository contains BASH wrappers for managing restic snapshots of Canasta MediaWikis, see https://canasta.wiki.
 
-As a default we use AWS S3 based repositories.
+* https://restic.net
+* The current version is configured for using AWS S3 based repositories.
+* It uses restic's [dockerized binary](https://hub.docker.com/r/restic/restic)
 
 ## How to use
 
