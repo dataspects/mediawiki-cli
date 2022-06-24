@@ -14,5 +14,8 @@ fi
 SNAPSHOT_ID0=$1
 SNAPSHOT_ID1=$2
 
-restic -r s3:$AWS_S3_API/$AWS_S3_BUCKET \
-    diff $SNAPSHOT_ID0 $SNAPSHOT_ID1
+sudo docker run \
+    --rm -i --env-file .env \
+    restic/restic \
+    -r s3:$AWS_S3_API/$AWS_S3_BUCKET \
+      diff $SNAPSHOT_ID0 $SNAPSHOT_ID1
