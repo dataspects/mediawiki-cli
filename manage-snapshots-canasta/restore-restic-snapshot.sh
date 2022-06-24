@@ -13,7 +13,7 @@ SNAPSHOT_ID=$1
 # right before running
 if [[ $SNAPSHOT_ID != "latest" ]]
 then
-    ./manage-snapshots/take-restic-snapshot.sh BeforeRestoring-$SNAPSHOT_ID
+    ./take-restic-snapshot.sh BeforeRestoring-$SNAPSHOT_ID
 fi
 
 currentsnapshotFolder="/home/lex/Canasta-DockerCompose/currentsnapshot"
@@ -36,19 +36,18 @@ sudo docker run \
 # FIXME: are // a problem in paths?
 
 printf "Copying files...\n"
-cp --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/$currentsnapshotFolder/config /home/lex/Canasta-DockerCompose/config; \
-cp --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/$currentsnapshotFolder/extensions /home/lex/Canasta-DockerCompose/extensions; \
-cp --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/$currentsnapshotFolder/images /home/lex/Canasta-DockerCompose/images; \
-cp --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/$currentsnapshotFolder/skins /home/lex/Canasta-DockerCompose/skins; \
+sudo rm -rf /home/lex/Canasta-DockerCompose/config/*;
+cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/currentsnapshot/config/* /home/lex/Canasta-DockerCompose/config/; \
+sudo rm -rf /home/lex/Canasta-DockerCompose/extensions/*;
+cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/currentsnapshot/extensions/* /home/lex/Canasta-DockerCompose/extensions/; \
+sudo rm -rf /home/lex/Canasta-DockerCompose/images/*;
+cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/currentsnapshot/images/* /home/lex/Canasta-DockerCompose/images/; \
+sudo rm -rf /home/lex/Canasta-DockerCompose/skins/*;
+cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/currentsnapshot/skins/* /home/lex/Canasta-DockerCompose/skins/; \
 printf "Copied files...\n"
-
-# FIXME: necessary?
-printf "Chowning files...\n"
-chown -R www-data:root /var/www/html/w
-printf "Chowned files...\n"
 
 printf "Restoring database...\n"
 sudo docker exec -e MYSQL_PASSWORD=$MYSQL_PASSWORD \
     canasta-dockercompose_web_1 bash \
-      -c 'mysql -h db -u root -p$MYSQL_PASSWORD $DATABASE_NAME < /mediawiki/config/db.sql'
+      -c 'mysql -h db -u root -p$MYSQL_PASSWORD my_wiki < /mediawiki/config/db.sql'
 printf "Restored database...\n"
