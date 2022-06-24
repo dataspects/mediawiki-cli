@@ -37,13 +37,13 @@ sudo docker run \
 
 printf "Copying files...\n"
 sudo rm -rf $CANASTA_ROOT/config/*;
-cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/currentsnapshot/config/* $CANASTA_ROOT/config/; \
+sudo cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/currentsnapshot/config/* $CANASTA_ROOT/config/; \
 sudo rm -rf $CANASTA_ROOT/extensions/*;
-cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/currentsnapshot/extensions/* $CANASTA_ROOT/extensions/; \
+sudo cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/currentsnapshot/extensions/* $CANASTA_ROOT/extensions/; \
 sudo rm -rf $CANASTA_ROOT/images/*;
-cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/currentsnapshot/images/* $CANASTA_ROOT/images/; \
+sudo cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/currentsnapshot/images/* $CANASTA_ROOT/images/; \
 sudo rm -rf $CANASTA_ROOT/skins/*;
-cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/currentsnapshot/skins/* $CANASTA_ROOT/skins/; \
+sudo cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/currentsnapshot/skins/* $CANASTA_ROOT/skins/; \
 printf "Copied files...\n"
 
 printf "Restoring database...\n"
