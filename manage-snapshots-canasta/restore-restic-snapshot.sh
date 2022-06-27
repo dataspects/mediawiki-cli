@@ -46,8 +46,14 @@ sudo rm -rf $CANASTA_ROOT/skins/*;
 sudo cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/currentsnapshot/skins/* $CANASTA_ROOT/skins/; \
 printf "Copied files...\n"
 
+printf "Creating database...\n"
+sudo docker exec -e MYSQL_PASSWORD=$MYSQL_PASSWORD \
+    $(basename $CANASTA_ROOT)_web_1 bash \
+      -c 'mysql -h db -u root -p$MYSQL_PASSWORD -e "CREATE DATABASE IF NOT EXISTS my_wiki"'
+printf "Created database...\n"
+
 printf "Restoring database...\n"
 sudo docker exec -e MYSQL_PASSWORD=$MYSQL_PASSWORD \
-    canasta-dockercompose_web_1 bash \
+    $(basename $CANASTA_ROOT)_web_1 bash \
       -c 'mysql -h db -u root -p$MYSQL_PASSWORD my_wiki < /mediawiki/config/db.sql'
 printf "Restored database...\n"

@@ -21,8 +21,8 @@ fi
 ######
 # STEP 1: Dump content database
   sudo docker exec -e MYSQL_PASSWORD=$MYSQL_PASSWORD \
-    canasta-dockercompose_web_1 bash \
-      -c 'mysqldump -h db -u root -p$MYSQL_PASSWORD my_wiki > /mediawiki/config/db.sql'
+    $(basename $CANASTA_ROOT)_web_1 bash \
+      -c 'mysqldump -h db -u root -p$MYSQL_PASSWORD --databases my_wiki > /mediawiki/config/db.sql'
 printf "mysqldump mediawiki completed.\n"
 
 ######
