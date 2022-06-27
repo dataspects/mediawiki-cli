@@ -10,7 +10,7 @@ fi
 SNAPSHOT_ID=$1
 
 result=$(sudo docker exec -e MYSQL_PASSWORD=$MYSQL_PASSWORD \
-  $(basename $CANASTA_ROOT)_web_1 bash \
+  $(basename $(tr [A-Z] [a-z] <<< "$CANASTA_ROOT"))_web_1 bash \
     -c 'mysql -h db -u root -p$MYSQL_PASSWORD -e "SHOW DATABASES LIKE \"my_wki\";"')
 
 if [ -n "$result" ]; then
@@ -20,7 +20,7 @@ if [ -n "$result" ]; then
 else
   printf "Initializing database...\n"
   sudo docker exec -e MYSQL_PASSWORD=$MYSQL_PASSWORD \
-      $(basename $CANASTA_ROOT)_web_1 bash \
+      $(basename $(tr [A-Z] [a-z] <<< "$CANASTA_ROOT"))_web_1 bash \
         -c 'mysql -h db -u root -p$MYSQL_PASSWORD -e "CREATE DATABASE IF NOT EXISTS $WG_DB_NAME"'
   printf "Initialized database...\n"
 
@@ -59,6 +59,6 @@ printf "Copied files...\n"
 
 printf "Restoring database...\n"
 sudo docker exec -e MYSQL_PASSWORD=$MYSQL_PASSWORD \
-    $(basename $CANASTA_ROOT)_web_1 bash \
+    $(basename $(tr [A-Z] [a-z] <<< "$CANASTA_ROOT"))_web_1 bash \
       -c 'mysql -h db -u root -p$MYSQL_PASSWORD $WG_DB_NAME < /mediawiki/config/db.sql'
 printf "Restored database...\n"
