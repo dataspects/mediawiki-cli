@@ -11,7 +11,7 @@ SNAPSHOT_ID=$1
 
 result=$(sudo docker exec -e MYSQL_PASSWORD=$MYSQL_PASSWORD \
   $(basename $(tr [A-Z] [a-z] <<< "$CANASTA_ROOT"))_web_1 bash \
-    -c 'mysql -h db -u root -p$MYSQL_PASSWORD -e "SHOW DATABASES LIKE \"my_wki\";"')
+    -c 'mysql -h db -u root -p$MYSQL_PASSWORD -e "SHOW DATABASES LIKE \"$WG_DB_NAME\";"')
 
 if [ -n "$result" ]; then
   printf "Database $result exists. Taking snapshot...\n"
