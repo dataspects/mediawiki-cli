@@ -42,6 +42,6 @@ sudo docker run \
     --rm -i --env-file $CANASTA_ROOT/.env \
     -v $currentsnapshotFolder:/currentsnapshot \
     restic/restic \
-    -r s3:$AWS_S3_API/$AWS_S3_BUCKET --tag $TAG \
+    -r s3:$AWS_S3_API/$AWS_S3_BUCKET --tag ${TAG}__on__$(hostname) \
       backup /currentsnapshot
 printf "completed running restic backup.\n"
