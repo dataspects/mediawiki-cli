@@ -9,11 +9,21 @@ fi
 
 SNAPSHOT_ID=$1
 
-# If it is "latest", then we're coming from an upgrade, which already had a snapshot
-# right before running
-if [[ $SNAPSHOT_ID != "latest" ]]
-then
-    ./take-restic-snapshot.sh BeforeRestoring-$SNAPSHOT_ID
+result=$(sudo docker exec -e MYSQL_PASSWORD=$MYSQL_PASSWORD \
+  $(basename $CANASTA_ROOT)_web_1 bash \
+    -c 'mysql -h db -u root -p$MYSQL_PASSWORD -e "SHOW DATABASES LIKE \"my_wki\";"')
+
+if [ -n "$result" ]; then
+  printf "Database $result exists. Taking snapshot...\n"
+  ./take-restic-snapshot.sh BeforeRestoring-$SNAPSHOT_ID
+  printf "Snapshot taken...\n"
+else
+  printf "Initializing database...\n"
+  sudo docker exec -e MYSQL_PASSWORD=$MYSQL_PASSWORD \
+      $(basename $CANASTA_ROOT)_web_1 bash \
+        -c 'mysql -h db -u root -p$MYSQL_PASSWORD -e "CREATE DATABASE IF NOT EXISTS $WG_DB_NAME"'
+  printf "Initialized database...\n"
+
 fi
 
 currentsnapshotFolder="$CANASTA_ROOT/currentsnapshot"
@@ -46,14 +56,9 @@ sudo rm -rf $CANASTA_ROOT/skins/*;
 sudo cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/currentsnapshot/skins/* $CANASTA_ROOT/skins/; \
 printf "Copied files...\n"
 
-printf "Creating database...\n"
-sudo docker exec -e MYSQL_PASSWORD=$MYSQL_PASSWORD \
-    $(basename $CANASTA_ROOT)_web_1 bash \
-      -c 'mysql -h db -u root -p$MYSQL_PASSWORD -e "CREATE DATABASE IF NOT EXISTS my_wiki"'
-printf "Created database...\n"
 
 printf "Restoring database...\n"
 sudo docker exec -e MYSQL_PASSWORD=$MYSQL_PASSWORD \
     $(basename $CANASTA_ROOT)_web_1 bash \
-      -c 'mysql -h db -u root -p$MYSQL_PASSWORD my_wiki < /mediawiki/config/db.sql'
+      -c 'mysql -h db -u root -p$MYSQL_PASSWORD $WG_DB_NAME < /mediawiki/config/db.sql'
 printf "Restored database...\n"
