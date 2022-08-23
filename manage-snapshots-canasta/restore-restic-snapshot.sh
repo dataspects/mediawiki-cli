@@ -71,8 +71,18 @@ sudo cp -r --preserve=links,mode,ownership,timestamps $currentsnapshotFolder/cur
 printf "Copied files...\n"
 
 
+# printf "Deleting existing database...\n"
+# sudo docker exec -e MYSQL_PASSWORD=$MYSQL_PASSWORD \
+#     $(basename $(tr [A-Z] [a-z] <<< "$CANASTA_ROOT"))_web_1 bash \
+#       -c 'mysql -h db -u root -p$MYSQL_PASSWORD -e "DROP DATABASE $WG_DB_NAME;"'
+# printf "Creating database...\n"
+# sudo docker exec -e MYSQL_PASSWORD=$MYSQL_PASSWORD \
+#     $(basename $(tr [A-Z] [a-z] <<< "$CANASTA_ROOT"))_web_1 bash \
+#       -c 'mysql -h db -u root -p$MYSQL_PASSWORD -e "CREATE DATABASE $WG_DB_NAME;"'
 printf "Restoring database...\n"
 sudo docker exec -e MYSQL_PASSWORD=$MYSQL_PASSWORD \
     $(basename $(tr [A-Z] [a-z] <<< "$CANASTA_ROOT"))_web_1 bash \
       -c 'mysql -h db -u root -p$MYSQL_PASSWORD $WG_DB_NAME < /mediawiki/config/db.sql'
 printf "Restored database...\n"
+
+printf "You may want to ./restart-system.sh and ./run-jobs-rebuild-data.sh\n"
