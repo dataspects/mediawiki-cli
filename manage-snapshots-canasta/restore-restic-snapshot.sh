@@ -16,15 +16,18 @@ result=$(sudo docker exec -e MYSQL_PASSWORD=$MYSQL_PASSWORD \
     -c 'mysql -h db -u root -p$MYSQL_PASSWORD -e "SHOW DATABASES LIKE \"$WG_DB_NAME\";"')
 
 
+
 if [ -n "$result" ]; then
   # $WG_DB_NAME exists on db:
   # -------------------------
   # The option --skip-before-restore-snapshot should be considered if:
   #   1) we restore a snapshot for a wiki which is in an undesirable state
   #   2) we clone a snapshot for a wiki which has been cloned before and whose state is irrelevant
-  printf "Database $result exists. Taking snapshot...\n"
-  ./take-restic-snapshot.sh BeforeRestoring-$SNAPSHOT_ID
-  printf "Snapshot taken...\n"
+  if [ "$2" != "--skip-before-restore-snapshot" ]; then
+    printf "Database $result exists. Taking snapshot...\n"
+    ./take-restic-snapshot.sh BeforeRestoring-$SNAPSHOT_ID
+    printf "Snapshot taken...\n"
+  fi
 else
   # $WG_DB_NAME doesn't exist on db:
   # --------------------------------
