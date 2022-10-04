@@ -4,3 +4,4 @@ fi
 if [ -v AZURE_CONTAINER ];then
     DESTINATION=azure:$AZURE_CONTAINER:$AZURE_CONTAINER_PATH
 fi
+echo "INFO: Restic repo is $DESTINATION"
