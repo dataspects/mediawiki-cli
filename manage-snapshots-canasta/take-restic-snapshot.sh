@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source $CANASTA_ROOT/.env
+source destination.sh
 
 if [[ -z "$1" ]]; then
   echo 'You must provide a restic snapshot tag as $1!'
@@ -42,6 +43,6 @@ sudo docker run \
     --rm -i --env-file $CANASTA_ROOT/.env \
     -v $currentsnapshotFolder:/currentsnapshot \
     restic/restic \
-    -r s3:$AWS_S3_API/$AWS_S3_BUCKET --tag ${TAG}__on__$(hostname) \
+    -r $DESTINATION --tag ${TAG}__on__$(hostname) \
       backup /currentsnapshot
 printf "completed running restic backup.\n"
