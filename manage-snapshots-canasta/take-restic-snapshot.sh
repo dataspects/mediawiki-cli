@@ -44,6 +44,6 @@ sudo docker run \
     --rm -i --env-file $CANASTA_ROOT/.env \
     -v $currentsnapshotFolder:/currentsnapshot \
     restic/restic \
-    -r $DESTINATION --tag ${TAG}__on__$(hostname) \
+    -r $RESTIC_REPOSITORY --tag ${TAG}__on__$(hostname) \
       backup /currentsnapshot
 printf "completed running restic backup.\n"
