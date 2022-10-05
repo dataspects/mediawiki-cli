@@ -1,7 +1,0 @@
-if [ -v AWS_S3_API ];then
-    DESTINATION=s3:$AWS_S3_API/$AWS_S3_BUCKET
-fi
-if [ -v AZURE_CONTAINER ];then
-    DESTINATION=azure:$AZURE_CONTAINER:$AZURE_CONTAINER_PATH
-fi
-echo "INFO: Restic repo is $DESTINATION"

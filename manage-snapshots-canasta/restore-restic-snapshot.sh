@@ -1,7 +1,8 @@
 #!/bin/bash
 
 source $CANASTA_ROOT/.env
-source destination.sh
+echo "INFO: Restic repo is $RESTIC_REPOSITORY"
+
 
 if [[ -z "$1" ]]; then
   echo 'You must provide a restic snapshot ID as $1!'
@@ -54,7 +55,7 @@ sudo docker run \
     --rm -i --env-file $CANASTA_ROOT/.env \
     -v $currentsnapshotFolder:/currentsnapshot \
     restic/restic \
-    -r $DESTINATION \
+    -r $RESTIC_REPOSITORY \
       restore $SNAPSHOT_ID \
         --target /currentsnapshot
 

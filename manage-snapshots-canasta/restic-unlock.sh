@@ -1,10 +1,11 @@
 #!/bin/bash
 
 source $CANASTA_ROOT/.env
-source destination.sh
+echo "INFO: Restic repo is $RESTIC_REPOSITORY"
+
 
 sudo docker run \
     --rm -i --env-file $CANASTA_ROOT/.env \
     restic/restic \
-    -r $DESTINATION \
+    -r $RESTIC_REPOSITORY \
         unlock
